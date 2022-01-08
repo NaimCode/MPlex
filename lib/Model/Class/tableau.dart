@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:mplex/Model/Class/variable.dart';
+import 'package:mplex/Model/constante.dart';
 import 'package:mplex/Model/enum.dart';
 
 class Tableau {
@@ -38,21 +39,32 @@ class Tableau {
   }
 
   int getPivot({required List<Variable> colonne}) {
-    List<double> rapport = [];
+    List<Map<int, double>> rapport = [];
+
     for (int i = 0; i < colonne.length; i++) {
-      rapport.add(st[i] / colonne[i].value);
+      rapport.add({i: st[i] / colonne[i].value});
     }
-    return rapport
-        .where((element) => element > 0)
-        .toList()
-        .indexOf(rapport.reduce(min));
+    // Constante.log.v(temp);
+    // temp.skipWhile((value) => value <= 0);
+    // Constante.log.v(temp);
+    for (int i = 0; i < rapport.length; i++) {
+      if (rapport[i].values.first <= 0) {
+        rapport.removeAt(i);
+      }
+    }
+    Map<int, double> index = rapport.first;
+    for (int i = 0; i < rapport.length; i++) {
+      index =
+          index.values.first >= rapport[i].values.first ? rapport[i] : index;
+    }
+    return index.keys.first;
   }
 
   void updateVDB({required int pivot, required int variableEntrante}) {
     this.vdb.replaceRange(pivot, pivot + 1, [
       Variable(
           name: variables[pivot][variableEntrante].name,
-          value: cj[pivot],
+          value: cj[variableEntrante],
           variableType: variables[pivot][variableEntrante].variableType)
     ]);
     //print(vdb);
@@ -80,7 +92,7 @@ class Tableau {
   }
 
   void updateZj() {
-    print("avant zj $zj");
+    // print("avant zj $zj");
     for (int i = 0; i < zj.length; i++) {
       double temp = 0;
       for (int j = 0; j < variables.length; j++) {
@@ -89,15 +101,15 @@ class Tableau {
 
       zj[i] = temp;
     }
-    print("apres zj $zj");
+    //print("apres zj $zj");
   }
 
   void updateCjZj() {
-    print("avant cj-zj $cj_zj");
+    //  print("avant cj-zj $cj_zj");
     for (int i = 0; i < zj.length; i++) {
       cj_zj[i] = cj[i] - zj[i];
     }
-    print("avant cj-zj $cj_zj");
+    // print("avant cj-zj $cj_zj");
   }
 
   Tableau copyWith({
@@ -120,5 +132,10 @@ class Tableau {
       variables: variables ?? this.variables,
       problemeType: problemeType ?? this.problemeType,
     );
+  }
+
+  @override
+  String toString() {
+    return 'Tableau(numero: $numero, cj: $cj, zj: $zj, cj_zj: $cj_zj, vdb: $vdb, st: $st, variables: $variables, problemeType: $problemeType)';
   }
 }

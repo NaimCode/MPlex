@@ -13,5 +13,5 @@ class Variable {
       this.condition});
 
   @override
-  String toString() => 'Variable(name: $name, value: $value)';
+  String toString() => '$name=$value';
 }

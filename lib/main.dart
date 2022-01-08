@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mplex/Data/test.dart';
 import 'package:mplex/Model/Class/probleme.dart';
 import 'package:mplex/Model/algorithme.dart';
+import 'package:mplex/Model/constante.dart';
+import 'package:mplex/Model/enum.dart';
+
+import 'Model/Class/tableau.dart';
 
 void main() {
   runApp(MPlex());
@@ -10,14 +14,35 @@ void main() {
 class MPlex extends StatelessWidget {
   MPlex({Key? key}) : super(key: key);
   final Algorithme algorithme = Algorithme();
+  resoudre(Probleme probleme) {
+    Tableau tableau = algorithme.resolution(tableau: probleme.toTableau()!);
+    double sol = 0;
+    Constante.log.v(tableau);
+    for (int i = 0; i < tableau.vdb.length; i++) {
+      if (probleme.variables
+          .map((e) => e.name)
+          .toList()
+          .contains(tableau.vdb[i].name)) {
+        sol += probleme.variables
+                .where((element) => element.name == tableau.vdb[i].name)
+                .first
+                .value *
+            tableau.st[i];
+      }
+    }
+    return sol.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
-    algorithme.resolution(tableau: problemeTest.toTableau()!);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           title: const Text("Algorithme de Simplex"),
+        ),
+        body: Center(
+          child: Text(resoudre(problemeTest)),
         ),
       ),
     );
