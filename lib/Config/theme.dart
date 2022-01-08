@@ -10,11 +10,26 @@ Color _primaryLight = const Color(0xff717987);
 class ThemeMPlex {
   static ThemeData light = ThemeData(
       focusColor: _primaryLight,
-      accentColor: _background,
+      elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+              primary: _backgroundSecondary,
+              elevation: 0)),
       applyElevationOverlayColor: true,
       dividerColor: _secondary,
       iconTheme: IconThemeData(color: _primary, size: 20),
       textTheme: TextTheme(
+          bodyText1: ThemeData.light().textTheme.bodyText2!.copyWith(
+              fontFamily: "Source Sans Pro",
+              fontWeight: FontWeight.w300,
+              color: ThemeData.light()
+                  .textTheme
+                  .bodyText2!
+                  .color!
+                  .withOpacity(0.7)),
+          caption: ThemeData.light().textTheme.caption!.copyWith(
+              color:
+                  ThemeData.light().textTheme.caption!.color!.withOpacity(0.4)),
           bodyText2: ThemeData.light()
               .textTheme
               .bodyText2!
@@ -28,7 +43,7 @@ class ThemeMPlex {
           titleTextStyle: TextStyle(
               fontFamily: "Heebo",
               color: _accent,
-              fontSize: 30,
+              fontSize: 20,
               fontWeight: FontWeight.w500)));
   static ThemeData dark = ThemeData(
     brightness: Brightness.dark,

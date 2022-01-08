@@ -10,6 +10,7 @@ import 'package:mplex/Model/Class/probleme.dart';
 import 'package:mplex/Model/algorithme.dart';
 import 'package:mplex/Model/constante.dart';
 import 'package:mplex/Model/enum.dart';
+import 'package:mplex/Pages/Resolution/index.dart';
 import 'package:mplex/page.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +36,7 @@ class MPlex extends StatelessWidget {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             theme: box.get("isDark") ? ThemeMPlex.dark : ThemeMPlex.light,
-            initialRoute: "/home",
+            initialRoute: "/resolution",
             getPages: [
               GetPage(
                   preventDuplicates: true,
@@ -50,8 +51,8 @@ class MPlex extends StatelessWidget {
                   transitionDuration: const Duration(milliseconds: 400),
                   transition: Transition.circularReveal,
                   name: "/resolution",
-                  page: () => Root(
-                        rightSide: Home(),
+                  page: () => const Root(
+                        rightSide: Resolution(),
                       )),
               GetPage(
                   preventDuplicates: true,

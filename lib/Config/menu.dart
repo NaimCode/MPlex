@@ -23,7 +23,7 @@ class MenuItem {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         margin: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(7),
+            borderRadius: BorderRadius.circular(3),
             color: isCurrent ? Get.theme.primaryColor : null),
         child: Row(
           mainAxisAlignment:

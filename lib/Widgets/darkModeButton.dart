@@ -12,14 +12,18 @@ class DarkModeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isDark = b.get("isDark");
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: IconButton(
-          onPressed: () =>
-              isDark ? b.put("isDark", false) : b.put("isDark", true),
-          icon: Icon(
-            isDark ? Icons.light_mode : Icons.dark_mode,
-            color: isDark ? Colors.white : Get.theme.iconTheme.color,
-          )),
+      padding: const EdgeInsets.all(0),
+      child: SizedBox(
+        height: 40,
+        child: IconButton(
+            padding: const EdgeInsets.all(0),
+            onPressed: () =>
+                isDark ? b.put("isDark", false) : b.put("isDark", true),
+            icon: Icon(
+              isDark ? Icons.light_mode : Icons.dark_mode,
+              color: isDark ? Colors.white : Get.theme.iconTheme.color,
+            )),
+      ),
       //)
     );
   }
