@@ -30,7 +30,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  font_awesome_flutter: ^9.2.0
+  get: ^4.6.1
+  hive: ^2.0.5
+  hive_flutter: ^1.1.0
   logger: ^1.1.0
+  provider: ^6.0.2
 
 dev_dependencies:
   flutter_lints: ^1.0.0
@@ -47,8 +52,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -59,10 +64,44 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: Heebo
+      fonts:
+        - asset: fonts/Heebo/Heebo-Regular.ttf
+        - asset: fonts/Heebo/Heebo-Thin.ttf
+          weight: 100
+        - asset: fonts/Heebo/Heebo-ExtraLight.ttf
+          weight: 200
+        - asset: fonts/Heebo/Heebo-Light.ttf
+          weight: 300
+        - asset: fonts/Heebo/Heebo-Medium.ttf
+          weight: 500
+        - asset: fonts/Heebo/Heebo-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Heebo/Heebo-Bold.ttf
+          weight: 700
+        - asset: fonts/Heebo/Heebo-ExtraBold.ttf
+          weight: 800
+        - asset: fonts/Heebo/Heebo-Black.ttf
+          weight: 900
+    - family: Source Sans Pro
+      fonts:
+        - asset: fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf
+        - asset: fonts/Source_Sans_Pro/SourceSansPro-Italic.ttf
+          style: italic
+        - asset: fonts/Source_Sans_Pro/SourceSansPro-ExtraLight.ttf
+          weight: 200
+        - asset: fonts/Source_Sans_Pro/SourceSansPro-Light.ttf
+          weight: 300
+        - asset: fonts/Source_Sans_Pro/SourceSansPro-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: fonts/Source_Sans_Pro/SourceSansPro-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Source_Sans_Pro/SourceSansPro-Bold.ttf
+          weight: 700
+        - asset: fonts/Source_Sans_Pro/SourceSansPro-Black.ttf
+          weight: 900
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

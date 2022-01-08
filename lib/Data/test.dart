@@ -1,7 +1,10 @@
 import 'package:mplex/Model/Class/contrainte.dart';
 import 'package:mplex/Model/Class/forme.dart';
 import 'package:mplex/Model/Class/probleme.dart';
+import 'package:mplex/Model/Class/tableau.dart';
 import 'package:mplex/Model/Class/variable.dart';
+import 'package:mplex/Model/algorithme.dart';
+import 'package:mplex/Model/constante.dart';
 import 'package:mplex/Model/enum.dart';
 
 Variable x1Test =
@@ -36,7 +39,25 @@ Probleme problemeTest = Probleme(
     name: "Z",
     variables: [x1Test, x2Test]);
 
-
+resoudreTest(Probleme probleme) {
+  var algorithme = Algorithme();
+  Tableau tableau = algorithme.resolution(tableau: probleme.toTableau()!);
+  double sol = 0;
+  Constante.log.v(tableau);
+  for (int i = 0; i < tableau.vdb.length; i++) {
+    if (probleme.variables
+        .map((e) => e.name)
+        .toList()
+        .contains(tableau.vdb[i].name)) {
+      sol += probleme.variables
+              .where((element) => element.name == tableau.vdb[i].name)
+              .first
+              .value *
+          tableau.st[i];
+    }
+  }
+  return sol.toString();
+}
 // Variable x1Test =
 //     Variable(name: "x1", value: 3, variableType: VariableType.DECISION);
 // Variable x2Test =
