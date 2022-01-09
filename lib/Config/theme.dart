@@ -9,6 +9,9 @@ Color _primaryLight = const Color(0xff717987);
 
 class ThemeMPlex {
   static ThemeData light = ThemeData(
+    inputDecorationTheme: InputDecorationTheme(
+      isCollapsed: true
+    ),
       focusColor: _primaryLight,
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
@@ -19,6 +22,11 @@ class ThemeMPlex {
       dividerColor: _secondary,
       iconTheme: IconThemeData(color: _primary, size: 20),
       textTheme: TextTheme(
+          headline1: TextStyle(
+            fontSize: 18,
+            color: Colors.amber[900],
+            fontFamily: "Pacifico",
+          ),
           bodyText1: ThemeData.light().textTheme.bodyText2!.copyWith(
               fontFamily: "Source Sans Pro",
               fontWeight: FontWeight.w300,

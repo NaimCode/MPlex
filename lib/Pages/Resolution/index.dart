@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mplex/Model/enum.dart';
+import 'package:mplex/Pages/Resolution/form_probleme_name.dart';
+
+import 'controller.dart';
+import 'form_probleme_type.dart';
+import 'form_variables.dart';
 
 class Resolution extends StatefulWidget {
   const Resolution({Key? key}) : super(key: key);
@@ -10,7 +15,8 @@ class Resolution extends StatefulWidget {
 }
 
 // obs variables
-Rx<ProblemeType> _problemeTypeController = ProblemeType.MAX.obs;
+
+///
 
 ///
 class _ResolutionState extends State<Resolution> {
@@ -68,80 +74,13 @@ class _ResolutionState extends State<Resolution> {
                 style: Get.theme.textTheme.caption,
               ),
               const SizedBox(height: 30),
-              Wrap(
-                spacing: 30,
-                runSpacing: 30,
-                children: [const FormProblemeType()],
-              )
+              const FormProblemeType(),
+              const SizedBox(height: 30),
+              const FormVariables(),
             ],
           ),
         ),
       ),
     );
-  }
-}
-
-class FormProblemeType extends StatelessWidget {
-  const FormProblemeType({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Obx(() => Container(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(2),
-            color: Get.theme.backgroundColor,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "Type d'optimisation",
-                style: Get.textTheme.caption,
-              ),
-              const SizedBox(height: 15),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 7, horizontal: 10),
-                      child: InkWell(
-                          autofocus: true,
-                          onTap: () =>
-                              _problemeTypeController.value = ProblemeType.MAX,
-                          child: Text(
-                            "Maximisation",
-                            style: Get.theme.textTheme.bodyText2,
-                          )),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(3),
-                        color: _problemeTypeController.value == ProblemeType.MAX
-                            ? Get.theme.scaffoldBackgroundColor
-                            : null,
-                      )),
-                  const SizedBox(width: 10),
-                  Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 7, horizontal: 10),
-                      child: InkWell(
-                          onTap: () =>
-                              _problemeTypeController.value = ProblemeType.MIN,
-                          child: Text(
-                            "Minimisation",
-                            style: Get.theme.textTheme.bodyText2,
-                          )),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(3),
-                        color: _problemeTypeController.value == ProblemeType.MIN
-                            ? Get.theme.scaffoldBackgroundColor
-                            : null,
-                      )),
-                ],
-              ),
-            ],
-          ),
-        ));
   }
 }
