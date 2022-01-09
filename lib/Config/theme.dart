@@ -9,9 +9,7 @@ Color _primaryLight = const Color(0xff717987);
 
 class ThemeMPlex {
   static ThemeData light = ThemeData(
-    inputDecorationTheme: InputDecorationTheme(
-      isCollapsed: true
-    ),
+      inputDecorationTheme: const InputDecorationTheme(isCollapsed: true),
       focusColor: _primaryLight,
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(

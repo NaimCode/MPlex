@@ -39,8 +39,37 @@ class FormVariables extends StatelessWidget {
                             // splashColor: Colors.transparent,
                             // highlightColor: Colors.transparent,
                             // hoverColor: Colors.transparent,
-                            onPressed: () =>
-                                FormController.problemeVariable.clear(),
+                            onPressed: () => Get.defaultDialog(
+                                  title: "Confirmation",
+                                  middleTextStyle: Get.textTheme.caption,
+                                  middleText:
+                                      "Ceci va entrainer l'effacement des contraintes",
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () => Get.back(),
+                                        child: Text(
+                                          "Annuler",
+                                          style: Get.theme.textTheme.bodyText2,
+                                        )),
+                                    OutlinedButton(
+                                        style: OutlinedButton.styleFrom(
+                                            primary: Colors.red,
+                                            onSurface: Colors.red),
+                                        onPressed: () {
+                                          FormController.problemeVariable
+                                              .clear();
+                                          FormController.problemeContrainte
+                                              .clear();
+                                          Get.back();
+                                        },
+                                        child: Text(
+                                          "Effacer",
+                                          style: Get.theme.textTheme.bodyText2,
+                                        ))
+                                  ],
+                                  titleStyle: Get.textTheme.subtitle2,
+                                  radius: 7,
+                                ),
                             icon: const Icon(Icons.delete)),
                       ),
                     ),
@@ -51,8 +80,6 @@ class FormVariables extends StatelessWidget {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   alignment: WrapAlignment.center,
                   runAlignment: WrapAlignment.center,
-                  runSpacing: 15,
-                  spacing: 15,
                   children: FormController.problemeVariable
                       .map((element) => element.getWidget())
                       .toList()

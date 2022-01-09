@@ -21,6 +21,18 @@ class Resolution extends StatefulWidget {
 
 ///
 class _ResolutionState extends State<Resolution> {
+  ScrollController scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -46,22 +58,50 @@ class _ResolutionState extends State<Resolution> {
                           icon: Icon(
                             Icons.visibility_outlined,
                             color: Get.theme.iconTheme.color,
-                          )))
+                          ))),
+                  Container(
+                      decoration: BoxDecoration(
+                          color: Get.theme.backgroundColor,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: ElevatedButton(
+                        child: Text(
+                          "Lancer",
+                          style: Get.theme.textTheme.bodyText2,
+                        ),
+                        onPressed: () {},
+                        // icon: Icon(
+                        //   Icons.lau,
+                        //   color: Get.theme.iconTheme.color,
+                        // ),
+                      ))
                 ],
               ),
             )),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(color: Get.theme.backgroundColor),
-          //  margin: const EdgeInsets.only(bottom: 10),
-          height: 60,
-          child: Row(
-            children: [TextButton(onPressed: () {}, child: Text("Suivant"))],
-          ),
-        ),
-        body: Padding(
-          padding:
-              const EdgeInsets.only(top: 13.0, left: 13, bottom: 13, right: 13),
+        // bottomNavigationBar: Container(
+        //   decoration: BoxDecoration(
+        //       color: Get.theme.backgroundColor,
+        //       borderRadius: const BorderRadius.only(
+        //           topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+
+        //   //  margin: const EdgeInsets.only(bottom: 10),
+        //   height: 60,
+        //   child: Row(
+        //     children: [
+        //       const Spacer(),
+        //       TextButton(
+        //           onPressed: () {},
+        //           child: Text(
+        //             "Lancer",
+        //             style: Get.theme.textTheme.caption,
+        //           ))
+        //     ],
+        //   ),
+        // ),
+        body: Scrollbar(
+          controller: scrollController,
           child: ListView(
+            padding: const EdgeInsets.only(top: 13.0, left: 13, right: 13),
+            controller: scrollController,
             //crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Divider(),
@@ -81,6 +121,7 @@ class _ResolutionState extends State<Resolution> {
               const FormVariables(),
               const SizedBox(height: 30),
               const FormContraintes(),
+              const SizedBox(height: 30),
             ],
           ),
         ),

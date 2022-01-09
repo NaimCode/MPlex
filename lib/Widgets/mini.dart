@@ -39,6 +39,28 @@ class VariableNameWidget extends StatelessWidget {
   }
 }
 
+class VariableNameWidget2 extends StatelessWidget {
+  const VariableNameWidget2({Key? key, required this.number}) : super(key: key);
+  final String number;
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(children: [
+        TextSpan(
+          text: number[0],
+          style: Get.theme.textTheme.headline1!.copyWith(fontSize: 22),
+        ),
+        TextSpan(
+          text: " ${number[1]}",
+          style: Get.theme.textTheme.headline1!
+              .copyWith(color: Get.theme.primaryColor),
+        ),
+      ]),
+    );
+  }
+}
+
 class InputMini extends StatelessWidget {
   const InputMini({Key? key}) : super(key: key);
 
