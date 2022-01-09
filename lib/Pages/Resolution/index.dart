@@ -4,6 +4,7 @@ import 'package:mplex/Model/enum.dart';
 import 'package:mplex/Pages/Resolution/form_probleme_name.dart';
 
 import 'controller.dart';
+import 'form_contraintes.dart';
 import 'form_probleme_type.dart';
 import 'form_variables.dart';
 
@@ -51,6 +52,7 @@ class _ResolutionState extends State<Resolution> {
             )),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(color: Get.theme.backgroundColor),
+          //  margin: const EdgeInsets.only(bottom: 10),
           height: 60,
           child: Row(
             children: [TextButton(onPressed: () {}, child: Text("Suivant"))],
@@ -77,6 +79,8 @@ class _ResolutionState extends State<Resolution> {
               const FormProblemeType(),
               const SizedBox(height: 30),
               const FormVariables(),
+              const SizedBox(height: 30),
+              const FormContraintes(),
             ],
           ),
         ),

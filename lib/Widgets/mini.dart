@@ -26,8 +26,8 @@ class VariableNameWidget extends StatelessWidget {
     return RichText(
       text: TextSpan(children: [
         TextSpan(
-          text: "X",
-          style: Get.theme.textTheme.headline1,
+          text: "x",
+          style: Get.theme.textTheme.headline1!.copyWith(fontSize: 22),
         ),
         TextSpan(
           text: " $number",
