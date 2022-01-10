@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mplex/Model/enum.dart';
 import 'package:mplex/Pages/Resolution/form_probleme_name.dart';
 
+import 'button_apercu.dart';
 import 'controller.dart';
 import 'form_contraintes.dart';
 import 'form_probleme_type.dart';
@@ -45,20 +46,7 @@ class _ResolutionState extends State<Resolution> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                      decoration: BoxDecoration(
-                          color: Get.theme.backgroundColor,
-                          borderRadius: BorderRadius.circular(5)),
-                      child: ElevatedButton.icon(
-                          label: Text(
-                            "Aperçu",
-                            style: Get.theme.textTheme.bodyText2,
-                          ),
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.visibility_outlined,
-                            color: Get.theme.iconTheme.color,
-                          ))),
+                  const ButtonApercu(),
                   Container(
                       decoration: BoxDecoration(
                           color: Get.theme.backgroundColor,
@@ -77,26 +65,6 @@ class _ResolutionState extends State<Resolution> {
                 ],
               ),
             )),
-        // bottomNavigationBar: Container(
-        //   decoration: BoxDecoration(
-        //       color: Get.theme.backgroundColor,
-        //       borderRadius: const BorderRadius.only(
-        //           topLeft: Radius.circular(10), topRight: Radius.circular(10))),
-
-        //   //  margin: const EdgeInsets.only(bottom: 10),
-        //   height: 60,
-        //   child: Row(
-        //     children: [
-        //       const Spacer(),
-        //       TextButton(
-        //           onPressed: () {},
-        //           child: Text(
-        //             "Lancer",
-        //             style: Get.theme.textTheme.caption,
-        //           ))
-        //     ],
-        //   ),
-        // ),
         body: Scrollbar(
           controller: scrollController,
           child: ListView(

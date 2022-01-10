@@ -14,29 +14,45 @@ class Contrainte {
     required this.value,
   });
 
-  Widget getWidget() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Get.theme.scaffoldBackgroundColor),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: variables
-                  .map((element) => element.getWidgetWithoutContainer(
-                      variables.indexOf(element) == 0))
-                  .toList()
-                  .cast(),
-            )),
-        const SizedBox(width: 20),
-        getInegalityIcon(),
-        const SizedBox(width: 20),
-        getValueWidget(),
-      ],
+  Widget getWidget({required var funct}) {
+    RxBool isHover = false.obs;
+    return MouseRegion(
+      onEnter: (v) => isHover.value = true,
+      onExit: (v) => isHover.value = false,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Get.theme.scaffoldBackgroundColor),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: variables
+                    .map((element) => element.getWidgetWithoutContainer(
+                        variables.indexOf(element) == 0))
+                    .toList()
+                    .cast(),
+              )),
+          const SizedBox(width: 20),
+          getInegalityIcon(),
+          const SizedBox(width: 20),
+          getValueWidget(),
+          const Spacer(),
+          Obx(() => Visibility(
+              visible: isHover.value,
+              child: IconButton(
+                  tooltip: "Supprimer cette contrainte",
+                  onPressed: funct,
+                  icon: FaIcon(
+                    FontAwesomeIcons.timesCircle,
+                    size: 18,
+                    color: Colors.red[900]!.withOpacity(0.8),
+                  ))))
+        ],
+      ),
     );
   }
 

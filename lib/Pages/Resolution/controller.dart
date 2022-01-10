@@ -9,4 +9,19 @@ class FormController {
   static Rx<TextEditingController> problemeName = TextEditingController().obs;
   static RxList problemeVariable = [].obs;
   static RxList problemeContrainte = [].obs;
+
+  static Widget getApercuFonctionObjective() {
+    return RichText(
+        text: TextSpan(
+            text: problemeTypeController.value == ProblemeType.MAX
+                ? "Max"
+                : "Min",
+            //style:
+            children: const [
+          TextSpan(
+            text: "Z",
+            //style:
+          ),
+        ]));
+  }
 }

@@ -73,7 +73,9 @@ class FormContraintes extends StatelessWidget {
               ),
               const Divider(),
               ...FormController.problemeContrainte
-                  .map((element) => element.getWidget())
+                  .map((element) => element.getWidget(
+                      funct: () =>
+                          FormController.problemeContrainte.remove(element)))
                   .toList()
               // const SizedBox(height: 15),
             ],
