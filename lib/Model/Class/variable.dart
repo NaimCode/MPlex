@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+
 import 'package:mplex/Model/Class/variable_condition.dart';
 import 'package:mplex/Model/enum.dart';
 
@@ -101,4 +102,16 @@ class Variable {
 
   @override
   String toString() => '$name=$value';
+
+  Variable copyWith({
+    String? name,
+    double? value,
+    VariableType? variableType,
+  }) {
+    return Variable(
+      variableType: variableType ?? this.variableType,
+      name: name ?? this.name,
+      value: value ?? this.value,
+    );
+  }
 }

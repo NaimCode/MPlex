@@ -36,7 +36,7 @@ class ButtonSuivant extends StatelessWidget {
                 onPressed: FormController.problemeContrainte.isNotEmpty &&
                         FormController.problemeVariable.isNotEmpty
                     ? () => Fonction.toOptimisation(
-                        probleme: FormController.toProbleme())
+                        probleme: FormController.toProbleme().copyWith())
                     : null,
                 // icon: Icon(
                 //   Icons.lau,

@@ -68,52 +68,19 @@ class _OptimisationState extends State<Optimisation> {
                 controller: ScrollController(),
                 slivers: [
                   SliverList(
-                      delegate: SliverChildListDelegate(const [
-                    OpFonctionObjective(),
-                    SizedBox(height: 30),
-                    OpFormeCanonique(),
-                    SizedBox(height: 30),
-                    OpFormeStandard(),
-                    SizedBox(height: 30),
-                    OpTableau()
+                      delegate: SliverChildListDelegate([
+                    const OpFonctionObjective(),
+                    const SizedBox(height: 30),
+                    const OpFormeCanonique(),
+                    const SizedBox(height: 30),
+                    const OpFormeStandard(),
+                    const SizedBox(height: 30),
+                    OpTableau(
+                      probleme: widget.probleme,
+                    )
                   ]))
                 ],
               ),
-            ))
-        // Scaffold(
-        //     appBar: AppBar(
-        //       automaticallyImplyLeading: false,
-        //       centerTitle: false,
-        //       title: Padding(
-        //         padding: const EdgeInsets.only(top: 6),
-        //         child: Row(
-        //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //           children: [
-        //             Container(
-        //               decoration: BoxDecoration(
-        //                   color: Get.theme.backgroundColor,
-        //                   borderRadius: BorderRadius.circular(5)),
-        //               child: ElevatedButton(
-        //                   child: Text(
-        //                     "Retour",
-        //                     style: Get.theme.textTheme.bodyText2,
-        //                   ),
-        //                   onPressed: () => Get.back()),
-        //             )
-        //           ],
-        //         ),
-        //       ),
-        //     ),
-        //     body: Scrollbar(
-        //       controller: scrollController,
-        //       child: ListView(
-        //         padding: const EdgeInsets.only(top: 13.0, left: 13, right: 13),
-        //         controller: scrollController,
-        //         children: const [
-
-        //         ],
-        //       ),
-        //     )),
-        );
+            )));
   }
 }

@@ -8,18 +8,44 @@ import 'package:mplex/Model/constante.dart';
 import 'package:mplex/Widgets/mini.dart';
 import 'package:provider/provider.dart';
 
-class OpTableau extends StatelessWidget {
-  const OpTableau({Key? key}) : super(key: key);
+class OpTableau extends StatefulWidget {
+  final Probleme probleme;
+
+  const OpTableau({Key? key, required this.probleme}) : super(key: key);
+
+  @override
+  State<OpTableau> createState() => _OpTableauState();
+}
+
+class _OpTableauState extends State<OpTableau> {
+  getTabs(Probleme p) {
+    List<Tableau> tabs = Algorithme().start(probleme: p).toList();
+    //  print(tabs);
+  }
+
+  @override
+  void initState() {
+    getTabs(widget.probleme);
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Probleme p = context.watch<Probleme>().copyWith();
-    List<Tableau> tabs = Algorithme().start(probleme: p).toList();
+    print(Algorithme()
+        .start(probleme: widget.probleme)
+        .map((e) => e.cj_zj)
+        .toList());
+    List<Tableau> tabs = [];
+    //.toList();
     return ListView.builder(
         shrinkWrap: true,
         // physics: const NeverScrollableScrollPhysics(),
         itemCount: tabs.length,
-        itemBuilder: (context, index) => OpTableauItem(t: tabs[index]));
+        itemBuilder: (context, index) {
+          //print(tabs[index].vdb);
+          return OpTableauItem(t: tabs[index]);
+        });
   }
 }
 
@@ -53,8 +79,14 @@ class OpTableauItem extends StatelessWidget {
               headingRowHeight: 36,
               columnSpacing: 50,
               columns: [
-                DataColumn(label: DatatableTitle(s: "Coef"), numeric: true),
-                DataColumn(label: DatatableTitle(s: "VDB"), numeric: false),
+                const DataColumn(
+                    label: DatatableTitle(s: "Coef"),
+                    numeric: true,
+                    tooltip: "Coefficients"),
+                const DataColumn(
+                    label: DatatableTitle(s: "VDB"),
+                    numeric: false,
+                    tooltip: "Variable de base"),
                 ...t.variables.first
                     .map(
                       (e) => DataColumn(
@@ -62,7 +94,10 @@ class OpTableauItem extends StatelessWidget {
                           numeric: true),
                     )
                     .toList(),
-                DataColumn(label: DatatableTitle(s: "ST"), numeric: true),
+                const DataColumn(
+                    label: DatatableTitle(s: "ST"),
+                    numeric: true,
+                    tooltip: "Second terme"),
                 // DataColumn(label: DatatableTitle(s: "Rapport"), numeric: true),
               ],
               rows: [

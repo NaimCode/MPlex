@@ -14,13 +14,13 @@ class FormController {
   static RxList problemeVariable = [].obs;
   static RxList problemeContrainte = [].obs;
 
- static Probleme toProbleme() {
+  static Probleme toProbleme() {
     return Probleme(
         forme: Forme(
             type: FormeType.CANONIQUE, contraintes: problemeContrainte.cast()),
         type: problemeTypeController.value,
         name: "Z",
-        variables: problemeVariable.cast());
+        variables: problemeVariable.map((element) => element).toList().cast());
   }
 
   static Widget getApercuFonctionObjective() {

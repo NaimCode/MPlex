@@ -16,10 +16,10 @@ class Algorithme {
 
   Iterable<Tableau> start({required Probleme probleme}) sync* {
     Tableau tab = probleme.toTableau();
-    yield tab;
+
+    // yield tab.copyWith();
     while (verification(tableau: tab) != SolutionType.FINAL) {
-      tab = resolution(tableau: tab.copyWith(numero: tab.numero + 1));
-      yield tab;
+      yield resolution(tableau: tab.copyWith(numero: tab.numero + 1));
     }
   }
 

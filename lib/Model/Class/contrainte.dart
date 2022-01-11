@@ -99,7 +99,7 @@ class Contrainte {
     double? value,
   }) {
     return Contrainte(
-      variables: variables ?? this.variables.map((e) => e).toList(),
+      variables: variables ?? this.variables.map((e) => e.copyWith()).toList(),
       inegalite: inegalite ?? this.inegalite,
       value: value ?? this.value,
     );
