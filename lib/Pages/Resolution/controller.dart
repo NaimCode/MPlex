@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
+import 'package:mplex/Model/Class/contrainte.dart';
 import 'package:mplex/Model/Class/forme.dart';
 import 'package:mplex/Model/Class/variable.dart';
 import 'package:mplex/Model/enum.dart';
@@ -11,17 +14,63 @@ class FormController {
   static RxList problemeContrainte = [].obs;
 
   static Widget getApercuFonctionObjective() {
-    return RichText(
-        text: TextSpan(
-            text: problemeTypeController.value == ProblemeType.MAX
-                ? "Max"
-                : "Min",
-            //style:
-            children: const [
-          TextSpan(
-            text: "Z",
-            //style:
-          ),
-        ]));
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          problemeTypeController.value == ProblemeType.MAX ? "Max" : "Min",
+          style: Get.theme.textTheme.headline6!
+              .copyWith(color: Get.theme.focusColor),
+        ),
+        const SizedBox(width: 3),
+        Text(
+          "Z",
+          style: Get.textTheme.headline6,
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 5),
+          child: FaIcon(FontAwesomeIcons.equals, size: 10),
+        ),
+        ...problemeVariable.map((element) => element
+            .getWidgetWithoutContainer(problemeVariable.indexOf(element) == 0))
+      ],
+    );
+  }
+
+  static Widget getApercuFormeCanonique() {
+    List<Contrainte> cons = FormController.problemeContrainte.value
+        .map((e) => e.copyWith())
+        .toList as List<Contrainte>;
+    for (Contrainte e in cons) {
+      e.variables.removeWhere((t) => t.value == 0);
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: cons
+            .map((e) => Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ...e.variables.map((element) =>
+                        element.getWidgetWithoutContainer(
+                            problemeVariable.indexOf(element) == 0)),
+                    Transform.scale(
+                      scale: 0.6,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: e.getInegalityIcon(),
+                      ),
+                    ),
+                    Text(e.value.toInt().toString(),
+                        style: Get.textTheme.bodyText2!.copyWith(fontSize: 17))
+                  ],
+                ))
+            .toList(),
+      ),
+    );
   }
 }

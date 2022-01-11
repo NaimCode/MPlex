@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+
 import 'package:mplex/Model/Class/variable.dart';
 import 'package:mplex/Model/enum.dart';
 
@@ -15,6 +16,12 @@ class Contrainte {
   });
 
   Widget getWidget({required var funct}) {
+    List<Variable> vars = [];
+    for (int i = 0; i < variables.length; i++) {
+      if (variables[i].value != 0) {
+        vars.add(variables[i]);
+      }
+    }
     RxBool isHover = false.obs;
     return MouseRegion(
       onEnter: (v) => isHover.value = true,
@@ -30,9 +37,9 @@ class Contrainte {
                   color: Get.theme.scaffoldBackgroundColor),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: variables
-                    .map((element) => element.getWidgetWithoutContainer(
-                        variables.indexOf(element) == 0))
+                children: vars
+                    .map((element) => element
+                        .getWidgetWithoutContainer(vars.indexOf(element) == 0))
                     .toList()
                     .cast(),
               )),
@@ -84,5 +91,17 @@ class Contrainte {
           value.toInt().toString(),
           style: Get.textTheme.bodyText2!.copyWith(fontSize: 20),
         ));
+  }
+
+  Contrainte copyWith({
+    List<Variable>? variables,
+    Inegalite? inegalite,
+    double? value,
+  }) {
+    return Contrainte(
+      variables: variables ?? this.variables,
+      inegalite: inegalite ?? this.inegalite,
+      value: value ?? this.value,
+    );
   }
 }

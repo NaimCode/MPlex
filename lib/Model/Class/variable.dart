@@ -47,7 +47,7 @@ class Variable {
         children: [
           value.isNegative
               ? const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 5),
                   child: FaIcon(
                     FontAwesomeIcons.minus,
                     size: 10,
@@ -56,7 +56,7 @@ class Variable {
               : Visibility(
                   visible: !isFirst,
                   child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      padding: EdgeInsets.symmetric(horizontal: 5),
                       child: FaIcon(
                         FontAwesomeIcons.plus,
                         size: 10,

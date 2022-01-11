@@ -92,160 +92,175 @@ class ButtonAddContrainte extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: "Ajouter une contrainte",
-      child: TextButton.icon(
-        style: TextButton.styleFrom(primary: Get.theme.primaryColor),
-        label: Text("Ajouter", style: Get.textTheme.caption),
-        icon: const Icon(Icons.add_box_rounded),
-        onPressed: () async {
-          List<TextEditingController> controller = [];
-          for (int i = 0; i < FormController.problemeVariable.length; i++) {
-            controller.add(TextEditingController());
-          }
-          GlobalKey<FormState> formKey = GlobalKey<FormState>();
-          Rx<Inegalite> inegalite = Inegalite.INF_EGAL.obs;
-          TextEditingController controllerValue = TextEditingController();
-          var check = await Get.defaultDialog(
-              actions: [
-                TextButton(
-                    onPressed: () => Get.back(result: false),
-                    child: Text(
-                      "Annuler",
-                      style: Get.theme.textTheme.bodyText2,
-                    )),
-                OutlinedButton(
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        Get.back(result: true);
-                      }
-                    },
-                    child: Text(
-                      "Ajouter",
-                      style: Get.theme.textTheme.bodyText2,
-                    ))
-              ],
-              titleStyle: Get.textTheme.caption,
-              radius: 7,
-              title: "",
-              // titleStyle: Get.theme.textTheme.sub,
-              content: Form(
-                key: formKey,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ...controller
-                          .map(
-                            (c) => Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SizedBox(
-                                    width: 55,
-                                    child: TextFormField(
-                                      controller: c,
-                                      validator: (v) {
-                                        if (double.tryParse(v!) == null) {
-                                          return "Erreur";
-                                        } else {
-                                          return null;
-                                        }
+      message: FormController.problemeVariable.isEmpty
+          ? ""
+          : "Ajouter une contrainte",
+      child: Obx(() => TextButton.icon(
+            style: TextButton.styleFrom(primary: Get.theme.primaryColor),
+            label: Text("Ajouter", style: Get.textTheme.caption),
+            icon: const Icon(Icons.add_box_rounded),
+            onPressed: FormController.problemeVariable.isEmpty
+                ? null
+                : () async {
+                    List<TextEditingController> controller = [];
+                    for (int i = 0;
+                        i < FormController.problemeVariable.length;
+                        i++) {
+                      controller.add(TextEditingController());
+                    }
+                    GlobalKey<FormState> formKey = GlobalKey<FormState>();
+                    Rx<Inegalite> inegalite = Inegalite.INF_EGAL.obs;
+                    TextEditingController controllerValue =
+                        TextEditingController();
+                    var check = await Get.defaultDialog(
+                        actions: [
+                          TextButton(
+                              onPressed: () => Get.back(result: false),
+                              child: Text(
+                                "Annuler",
+                                style: Get.theme.textTheme.bodyText2,
+                              )),
+                          OutlinedButton(
+                              onPressed: () {
+                                if (formKey.currentState!.validate()) {
+                                  Get.back(result: true);
+                                }
+                              },
+                              child: Text(
+                                "Ajouter",
+                                style: Get.theme.textTheme.bodyText2,
+                              ))
+                        ],
+                        titleStyle: Get.textTheme.caption,
+                        radius: 7,
+                        title: "",
+                        // titleStyle: Get.theme.textTheme.sub,
+                        content: Form(
+                          key: formKey,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ...controller
+                                    .map(
+                                      (c) => Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            SizedBox(
+                                              width: 55,
+                                              child: TextFormField(
+                                                controller: c,
+                                                validator: (v) {
+                                                  if (double.tryParse(v!) ==
+                                                      null) {
+                                                    return "Erreur";
+                                                  } else {
+                                                    return null;
+                                                  }
+                                                },
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                textAlign: TextAlign.right,
+                                                //textDirection: TextDirection.rtl,
+                                                decoration:
+                                                    const InputDecoration(
+                                                        filled: true,
+                                                        hintTextDirection:
+                                                            TextDirection.rtl),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 5),
+                                            VariableNameWidget2(
+                                                number: FormController
+                                                    .problemeVariable[
+                                                        controller.indexOf(c)]
+                                                    .name)
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                                const SizedBox(width: 20),
+                                Obx(
+                                  () => DropdownButton<Inegalite>(
+                                      iconSize: 12,
+                                      underline: const SizedBox(),
+                                      // hint:  Text("Select item"),
+                                      value: inegalite.value,
+                                      onChanged: (var value) {
+                                        inegalite.value = value!;
                                       },
-                                      keyboardType: TextInputType.number,
-                                      textAlign: TextAlign.right,
-                                      //textDirection: TextDirection.rtl,
-                                      decoration: const InputDecoration(
-                                          filled: true,
-                                          hintTextDirection: TextDirection.rtl),
-                                    ),
+                                      items: const [
+                                        DropdownMenuItem(
+                                            value: Inegalite.INF_EGAL,
+                                            child: FaIcon(FontAwesomeIcons
+                                                .lessThanEqual)),
+                                        DropdownMenuItem(
+                                            value: Inegalite.INF,
+                                            child: FaIcon(
+                                                FontAwesomeIcons.lessThan)),
+                                        DropdownMenuItem(
+                                            value: Inegalite.SUP_EGAL,
+                                            child: FaIcon(FontAwesomeIcons
+                                                .greaterThanEqual)),
+                                        DropdownMenuItem(
+                                            value: Inegalite.SUP,
+                                            child: FaIcon(
+                                                FontAwesomeIcons.greaterThan)),
+                                        DropdownMenuItem(
+                                            value: Inegalite.EGAL,
+                                            child: FaIcon(
+                                                FontAwesomeIcons.equals)),
+                                      ]),
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                SizedBox(
+                                  width: 70,
+                                  child: TextFormField(
+                                    controller: controllerValue,
+                                    keyboardType: TextInputType.number,
+                                    textAlign: TextAlign.right,
+                                    validator: (v) {
+                                      if (double.tryParse(v!) == null) {
+                                        return "Erreur";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                    //textDirection: TextDirection.rtl,
+                                    decoration: const InputDecoration(
+                                        filled: true,
+                                        hintTextDirection: TextDirection.rtl),
                                   ),
-                                  const SizedBox(width: 5),
-                                  VariableNameWidget2(
-                                      number: FormController
-                                          .problemeVariable[
-                                              controller.indexOf(c)]
-                                          .name)
-                                ],
-                              ),
+                                ),
+                                // VariableNameWidget(
+                                //     number: FormController.problemeVariable.length + 1)
+                              ],
                             ),
-                          )
-                          .toList(),
-                      const SizedBox(width: 20),
-                      Obx(
-                        () => DropdownButton<Inegalite>(
-                            iconSize: 12,
-                            underline: const SizedBox(),
-                            // hint:  Text("Select item"),
-                            value: inegalite.value,
-                            onChanged: (var value) {
-                              inegalite.value = value!;
-                            },
-                            items: const [
-                              DropdownMenuItem(
-                                  value: Inegalite.INF_EGAL,
-                                  child:
-                                      FaIcon(FontAwesomeIcons.lessThanEqual)),
-                              DropdownMenuItem(
-                                  value: Inegalite.INF,
-                                  child: FaIcon(FontAwesomeIcons.lessThan)),
-                              DropdownMenuItem(
-                                  value: Inegalite.SUP_EGAL,
-                                  child: FaIcon(
-                                      FontAwesomeIcons.greaterThanEqual)),
-                              DropdownMenuItem(
-                                  value: Inegalite.SUP,
-                                  child: FaIcon(FontAwesomeIcons.greaterThan)),
-                              DropdownMenuItem(
-                                  value: Inegalite.EGAL,
-                                  child: FaIcon(FontAwesomeIcons.equals)),
-                            ]),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      SizedBox(
-                        width: 70,
-                        child: TextFormField(
-                          controller: controllerValue,
-                          keyboardType: TextInputType.number,
-                          textAlign: TextAlign.right,
-                          validator: (v) {
-                            if (double.tryParse(v!) == null) {
-                              return "Erreur";
-                            } else {
-                              return null;
-                            }
-                          },
-                          //textDirection: TextDirection.rtl,
-                          decoration: const InputDecoration(
-                              filled: true,
-                              hintTextDirection: TextDirection.rtl),
-                        ),
-                      ),
-                      // VariableNameWidget(
-                      //     number: FormController.problemeVariable.length + 1)
-                    ],
-                  ),
-                ),
-              ));
-          if (check) {
-            Contrainte contrainte = Contrainte(
-                variables: controller
-                    .map((e) => Variable(
-                        name: FormController
-                            .problemeVariable[controller.indexOf(e)].name,
-                        value: double.parse(e.text),
-                        variableType: VariableType.DECISION))
-                    .toList(),
-                inegalite: inegalite.value,
-                value: double.parse(controllerValue.value.text));
-            FormController.problemeContrainte.add(contrainte);
-          }
-        },
-      ),
+                          ),
+                        ));
+                    if (check) {
+                      Contrainte contrainte = Contrainte(
+                          variables: controller
+                              .map((e) => Variable(
+                                  name: FormController
+                                      .problemeVariable[controller.indexOf(e)]
+                                      .name,
+                                  value: double.parse(e.text),
+                                  variableType: VariableType.DECISION))
+                              .toList(),
+                          inegalite: inegalite.value,
+                          value: double.parse(controllerValue.value.text));
+                      FormController.problemeContrainte.add(contrainte);
+                    }
+                  },
+          )),
     );
   }
 }

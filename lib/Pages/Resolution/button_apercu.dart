@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mplex/Pages/Resolution/controller.dart';
 
 class ButtonApercu extends StatelessWidget {
   const ButtonApercu({
@@ -28,7 +29,16 @@ class ButtonApercu extends StatelessWidget {
                       Text(
                         "Fonction objective:",
                         style: Get.theme.textTheme.caption,
-                      )
+                      ),
+                      const SizedBox(height: 3),
+                      FormController.getApercuFonctionObjective(),
+                      const SizedBox(height: 6),
+                      Text(
+                        "Forme canonique:",
+                        style: Get.theme.textTheme.caption,
+                      ),
+                      const SizedBox(height: 3),
+                      FormController.getApercuFormeCanonique()
                     ],
                   ),
                 ),
