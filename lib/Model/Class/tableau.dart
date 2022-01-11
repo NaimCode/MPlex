@@ -2,6 +2,7 @@
 
 import 'dart:math';
 
+import 'package:mplex/Model/Class/solution.dart';
 import 'package:mplex/Model/Class/variable.dart';
 import 'package:mplex/Model/constante.dart';
 import 'package:mplex/Model/enum.dart';
@@ -25,6 +26,13 @@ class Tableau {
     required this.variables,
     required this.problemeType,
   });
+
+  Solution toSolution() {
+    double val = 0;
+
+    List<Variable> v = [];
+    return Solution(variable: v, value: val);
+  }
 
   int getVariableEntrante() {
     return this.cj_zj.indexOf(this.cj_zj.reduce(max));

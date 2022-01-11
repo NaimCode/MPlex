@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:mplex/Model/Class/contrainte.dart';
 import 'package:mplex/Model/Class/forme.dart';
+import 'package:mplex/Model/Class/probleme.dart';
 import 'package:mplex/Model/Class/variable.dart';
 import 'package:mplex/Model/enum.dart';
 
@@ -12,6 +13,15 @@ class FormController {
   static Rx<TextEditingController> problemeName = TextEditingController().obs;
   static RxList problemeVariable = [].obs;
   static RxList problemeContrainte = [].obs;
+
+ static Probleme toProbleme() {
+    return Probleme(
+        forme: Forme(
+            type: FormeType.CANONIQUE, contraintes: problemeContrainte.cast()),
+        type: problemeTypeController.value,
+        name: "Z",
+        variables: problemeVariable.cast());
+  }
 
   static Widget getApercuFonctionObjective() {
     return Row(
@@ -39,15 +49,16 @@ class FormController {
   }
 
   static Widget getApercuFormeCanonique() {
-    List<Contrainte> cons = FormController.problemeContrainte.value
-        .map((e) => e.copyWith())
-        .toList as List<Contrainte>;
-    for (Contrainte e in cons) {
-      e.variables.removeWhere((t) => t.value == 0);
+    List<Contrainte> cons = [];
+    for (int i = 0; i < problemeContrainte.length; i++) {
+      cons.add(problemeContrainte[i].copyWith());
+    }
+    for (int i = 0; i < cons.length; i++) {
+      cons[i].variables.removeWhere((element) => element.value == 0);
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
+      padding: const EdgeInsets.symmetric(vertical: 0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: cons
@@ -57,7 +68,7 @@ class FormController {
                   children: [
                     ...e.variables.map((element) =>
                         element.getWidgetWithoutContainer(
-                            problemeVariable.indexOf(element) == 0)),
+                            e.variables.indexOf(element) == 0)),
                     Transform.scale(
                       scale: 0.6,
                       child: Padding(

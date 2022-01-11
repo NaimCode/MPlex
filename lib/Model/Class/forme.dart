@@ -8,4 +8,11 @@ class Forme {
     required this.type,
     required this.contraintes,
   });
+
+  Forme copyWith({List<Contrainte>? contraintes, FormeType? type}) {
+    return Forme(
+      type: type ?? this.type,
+      contraintes: contraintes ?? this.contraintes.map((e) => e.copyWith()).toList(),
+    );
+  }
 }

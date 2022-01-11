@@ -80,6 +80,25 @@ class Variable {
     );
   }
 
+  String removeDecimalZeroFormat() {
+    return value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 1);
+  }
+
+  Widget getNameWidget() {
+    return RichText(
+        text: TextSpan(
+            text: name[0],
+            style: Get.theme.textTheme.headline1,
+            children: [
+          //!Waarning might throw exception
+          TextSpan(
+            text: name[1],
+            style: Get.theme.textTheme.headline1!.copyWith(
+                fontSize: 15, color: Get.theme.primaryColor.withOpacity(0.6)),
+          ),
+        ]));
+  }
+
   @override
   String toString() => '$name=$value';
 }

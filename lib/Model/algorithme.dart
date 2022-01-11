@@ -7,29 +7,39 @@ import 'package:mplex/Model/Class/variable.dart';
 import 'package:mplex/Model/constante.dart';
 import 'package:mplex/Model/enum.dart';
 
+import 'Class/probleme.dart';
+
 class Algorithme {
   Tableau? maximisation(Tableau tableau) {
     return null;
   }
 
+  Iterable<Tableau> start({required Probleme probleme}) sync* {
+    Tableau tab = probleme.toTableau();
+    yield tab;
+    while (verification(tableau: tab) != SolutionType.FINAL) {
+      tab = resolution(tableau: tab.copyWith(numero: tab.numero + 1));
+      yield tab;
+    }
+  }
+
   Tableau resolution({required Tableau tableau}) {
     //Constante.log.i(tableau);
-    switch (verification(tableau: tableau)) {
-      case SolutionType.FINAL:
-        return tableau;
-      default:
-        int variableEntrante = tableau.getVariableEntrante();
-        List<Variable> colonne =
-            tableau.getColonnePivot(variableEntrante: variableEntrante);
-        int pivot = tableau.getPivot(colonne: colonne);
-        tableau.updateVDB(pivot: pivot, variableEntrante: variableEntrante);
-        tableau.updateVariablesAndST(
-            pivot: pivot, variableEntrante: variableEntrante);
-        tableau.updateZj();
-        tableau.updateCjZj();
-        return resolution(
-            tableau: tableau.copyWith(numero: tableau.numero + 1));
-    }
+
+    int variableEntrante = tableau.getVariableEntrante();
+    List<Variable> colonne =
+        tableau.getColonnePivot(variableEntrante: variableEntrante);
+    int pivot = tableau.getPivot(colonne: colonne);
+    tableau.updateVDB(pivot: pivot, variableEntrante: variableEntrante);
+    tableau.updateVariablesAndST(
+        pivot: pivot, variableEntrante: variableEntrante);
+    tableau.updateZj();
+    tableau.updateCjZj();
+
+    // return resolution(
+    //     tableau: tableau.copyWith(numero: tableau.numero + 1));
+
+    return tableau;
   }
 
   SolutionType verification({required Tableau tableau}) {

@@ -4,6 +4,7 @@ import 'package:mplex/Model/enum.dart';
 import 'package:mplex/Pages/Resolution/form_probleme_name.dart';
 
 import 'button_apercu.dart';
+import 'button_suivant.dart';
 import 'controller.dart';
 import 'form_contraintes.dart';
 import 'form_probleme_type.dart';
@@ -40,29 +41,13 @@ class _ResolutionState extends State<Resolution> {
       padding: const EdgeInsets.only(right: 10),
       child: Scaffold(
         appBar: AppBar(
+            automaticallyImplyLeading: false,
             centerTitle: false,
             title: Padding(
               padding: const EdgeInsets.only(top: 6),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const ButtonApercu(),
-                  Container(
-                      decoration: BoxDecoration(
-                          color: Get.theme.backgroundColor,
-                          borderRadius: BorderRadius.circular(5)),
-                      child: ElevatedButton(
-                        child: Text(
-                          "Lancer",
-                          style: Get.theme.textTheme.bodyText2,
-                        ),
-                        onPressed: () {},
-                        // icon: Icon(
-                        //   Icons.lau,
-                        //   color: Get.theme.iconTheme.color,
-                        // ),
-                      ))
-                ],
+                children: const [ButtonApercu(), ButtonSuivant()],
               ),
             )),
         body: Scrollbar(
