@@ -1,8 +1,10 @@
 // ignore_for_file: avoid_print, curly_braces_in_flow_control_structures, non_constant_identifier_names
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:mplex/Model/Class/tableau.dart';
 import 'package:mplex/Model/enum.dart';
@@ -11,11 +13,19 @@ import 'contrainte.dart';
 import 'forme.dart';
 import 'variable.dart';
 
+part 'probleme.g.dart';
+
+@HiveType(typeId: 2)
 class Probleme {
+  @HiveField(1)
   String nameVariableEcart = "e";
+  @HiveField(2)
   String name;
+  @HiveField(3)
   Forme forme;
+  @HiveField(4)
   ProblemeType type;
+  @HiveField(0)
   List<Variable> variables;
   Probleme({
     required this.forme,
@@ -108,6 +118,69 @@ class Probleme {
     return tableau;
   }
 
+  Widget getApercuFonctionObjective() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          type == ProblemeType.MAX ? "Max" : "Min",
+          style: Get.theme.textTheme.headline6!
+              .copyWith(color: Get.theme.focusColor),
+        ),
+        const SizedBox(width: 3),
+        Text(
+          name,
+          style: Get.textTheme.headline6,
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 5),
+          child: FaIcon(FontAwesomeIcons.equals, size: 10),
+        ),
+        ...variables.map((element) =>
+            element.getWidgetWithoutContainer(variables.indexOf(element) == 0))
+      ],
+    );
+  }
+
+  Widget getApercuFormeCanonique() {
+    List<Contrainte> cons = [];
+    for (int i = 0; i < forme.contraintes.length; i++) {
+      cons.add(forme.contraintes[i].copyWith());
+    }
+    for (int i = 0; i < cons.length; i++) {
+      cons[i].variables.removeWhere((element) => element.value == 0);
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisSize: MainAxisSize.min,
+        children: cons
+            .map((e) => Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ...e.variables.map((element) =>
+                        element.getWidgetWithoutContainer(
+                            e.variables.indexOf(element) == 0)),
+                    Transform.scale(
+                      scale: 0.6,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: e.getInegalityIcon(),
+                      ),
+                    ),
+                    Text(e.value.toInt().toString(),
+                        style: Get.textTheme.bodyText2!.copyWith(fontSize: 17))
+                  ],
+                ))
+            .toList(),
+      ),
+    );
+  }
+
   Widget toFonctionObjectiveWidget() {
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -183,5 +256,24 @@ class Probleme {
       forme: forme ?? this.forme.copyWith(),
       variables: variables ?? this.variables.map((e) => e).toList(),
     );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Probleme &&
+        other.nameVariableEcart == nameVariableEcart &&
+        other.name == name &&
+        other.forme == forme &&
+        listEquals(other.variables, variables);
+  }
+
+  @override
+  int get hashCode {
+    return nameVariableEcart.hashCode ^
+        name.hashCode ^
+        forme.hashCode ^
+        variables.hashCode;
   }
 }

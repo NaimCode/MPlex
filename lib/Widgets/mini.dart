@@ -9,7 +9,7 @@ class CardForm extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(2),
+        borderRadius: BorderRadius.circular(8),
         color: Get.theme.backgroundColor,
       ),
       child: widget,

@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:mplex/Model/Class/variable.dart';
 import 'package:mplex/Model/enum.dart';
+part 'contrainte.g.dart';
 
+@HiveType(typeId: 4)
 class Contrainte {
+  @HiveField(0)
   List<Variable> variables;
+  @HiveField(1)
   Inegalite inegalite;
+  @HiveField(2)
   double value;
   Contrainte({
     required this.variables,

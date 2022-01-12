@@ -64,6 +64,7 @@ class FormController {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
         children: cons
             .map((e) => Row(

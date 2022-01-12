@@ -3,14 +3,20 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:mplex/Config/fonction.dart';
 
 import 'package:mplex/Model/Class/variable_condition.dart';
 import 'package:mplex/Model/enum.dart';
+part 'variable.g.dart';
 
+@HiveType(typeId: 0)
 class Variable {
+  @HiveField(0)
   String name;
+  @HiveField(1)
   double value;
+  @HiveField(2)
   VariableType variableType;
   VariableCondition? condition;
   Variable(
@@ -128,7 +134,7 @@ class Variable {
         Padding(
           padding: const EdgeInsets.only(top: 3),
           child: Text(
-  removeDecimalZeroFormat(),
+            removeDecimalZeroFormat(),
             style: Get.textTheme.subtitle2,
           ),
         )

@@ -9,15 +9,16 @@ class Fonction {
   static void toOptimisation({required Probleme probleme}) {
     Get.to(
         () => Root(
-              rightSide: Optimisation(probleme: FormController.toProbleme()),
+              rightSide: Optimisation(probleme: probleme),
             ),
         preventDuplicates: true,
         duration: const Duration(milliseconds: 400),
-        transition: Transition.circularReveal,
+        transition: Transition.downToUp,
         fullscreenDialog: true,
         routeName: "/optimisation/${probleme.name}");
   }
+
   static String removeDecimalZeroFormat(double n) {
     return n.toStringAsFixed(n.truncateToDouble() == n ? 0 : 1);
-}
+  }
 }
