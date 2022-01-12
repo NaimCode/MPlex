@@ -17,7 +17,11 @@ class FormController {
   static Probleme toProbleme() {
     return Probleme(
         forme: Forme(
-            type: FormeType.CANONIQUE, contraintes: problemeContrainte.cast()),
+            type: FormeType.CANONIQUE,
+            contraintes: problemeContrainte
+                .map((element) => element.copyWith())
+                .toList()
+                .cast()),
         type: problemeTypeController.value,
         name: "Z",
         variables: problemeVariable.map((element) => element).toList().cast());

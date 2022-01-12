@@ -31,7 +31,11 @@ class _OptimisationState extends State<Optimisation> {
   Widget build(BuildContext context) {
     ScrollController scrollController = ScrollController();
     return Provider<Probleme>(
-        create: (context) => widget.probleme,
+        create: (context) => Probleme(
+            forme: widget.probleme.forme.copyWith(),
+            type: widget.probleme.type,
+            name: widget.probleme.name,
+            variables: widget.probleme.variables.map((e) => e).toList()),
         child: NestedScrollView(
             controller: scrollController,
             headerSliverBuilder:
@@ -56,6 +60,24 @@ class _OptimisationState extends State<Optimisation> {
                                       style: Get.theme.textTheme.bodyText2,
                                     ),
                                     onPressed: () => Get.back()),
+                              ),
+                              Tooltip(
+                                message: "Sauvegarder le problème",
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Get.theme.backgroundColor,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  child: ElevatedButton.icon(
+                                      icon: Icon(
+                                        Icons.bookmark_add,
+                                        color: Get.theme.primaryColor,
+                                      ),
+                                      label: Text(
+                                        "Sauvegarder",
+                                        style: Get.theme.textTheme.bodyText2,
+                                      ),
+                                      onPressed: () => Get.back()),
+                                ),
                               )
                             ],
                           ),

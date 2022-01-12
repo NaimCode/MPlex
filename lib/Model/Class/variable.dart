@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:mplex/Config/fonction.dart';
 
 import 'package:mplex/Model/Class/variable_condition.dart';
 import 'package:mplex/Model/enum.dart';
@@ -100,6 +103,72 @@ class Variable {
         ]));
   }
 
+  Widget getNameValueWidget() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        RichText(
+            text: TextSpan(
+                text: name[0],
+                style: Get.theme.textTheme.headline1,
+                children: [
+              //!Waarning might throw exception
+              TextSpan(
+                text: name[1],
+                style: Get.theme.textTheme.headline1!.copyWith(
+                    fontSize: 15,
+                    color: Get.theme.primaryColor.withOpacity(0.6)),
+              ),
+            ])),
+        const Padding(
+          padding: EdgeInsets.only(right: 6, left: 6, top: 5),
+          child: FaIcon(FontAwesomeIcons.equals, size: 10),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 3),
+          child: Text(
+  removeDecimalZeroFormat(),
+            style: Get.textTheme.subtitle2,
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget getNameValueWidget2(double v) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        RichText(
+            text: TextSpan(
+                text: name[0],
+                style: Get.theme.textTheme.headline1,
+                children: [
+              //!Waarning might throw exception
+              TextSpan(
+                text: name[1],
+                style: Get.theme.textTheme.headline1!.copyWith(
+                    fontSize: 15,
+                    color: Get.theme.primaryColor.withOpacity(0.6)),
+              ),
+            ])),
+        const Padding(
+          padding: EdgeInsets.only(right: 6, left: 6, top: 5),
+          child: FaIcon(FontAwesomeIcons.equals, size: 10),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 3),
+          child: Text(
+            Fonction.removeDecimalZeroFormat(v),
+            style: Get.textTheme.subtitle2,
+          ),
+        )
+      ],
+    );
+  }
+
   @override
   String toString() => '$name=$value';
 
@@ -114,4 +183,25 @@ class Variable {
       value: value ?? this.value,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'variableType': variableType,
+      'name': name,
+      'value': value,
+    };
+  }
+
+  factory Variable.fromMap(Map<String, dynamic> map) {
+    return Variable(
+      variableType: map["variableType"] ?? VariableType.DECISION,
+      name: map['name'] ?? '',
+      value: map['value']?.toDouble() ?? 0.0,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Variable.fromJson(String source) =>
+      Variable.fromMap(json.decode(source));
 }

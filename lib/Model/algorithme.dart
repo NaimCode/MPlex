@@ -17,9 +17,27 @@ class Algorithme {
   Iterable<Tableau> start({required Probleme probleme}) sync* {
     Tableau tab = probleme.toTableau();
 
-    // yield tab.copyWith();
+    yield Tableau(
+        numero: tab.numero,
+        cj: tab.cj.map((e) => e).toList(),
+        zj: tab.zj.map((e) => e).toList(),
+        cj_zj: tab.cj_zj.map((e) => e).toList(),
+        vdb: tab.vdb.map((e) => e).toList(),
+        st: tab.st.map((e) => e).toList(),
+        variables: tab.variables.map((e) => e.map((e) => e).toList()).toList(),
+        problemeType: tab.problemeType);
     while (verification(tableau: tab) != SolutionType.FINAL) {
-      yield resolution(tableau: tab.copyWith(numero: tab.numero + 1));
+      tab = resolution(tableau: tab.copyWith(numero: tab.numero + 1));
+      yield Tableau(
+          numero: tab.numero,
+          cj: tab.cj.map((e) => e).toList(),
+          zj: tab.zj.map((e) => e).toList(),
+          cj_zj: tab.cj_zj.map((e) => e).toList(),
+          vdb: tab.vdb.map((e) => e).toList(),
+          st: tab.st.map((e) => e).toList(),
+          variables:
+              tab.variables.map((e) => e.map((e) => e).toList()).toList(),
+          problemeType: tab.problemeType);
     }
   }
 

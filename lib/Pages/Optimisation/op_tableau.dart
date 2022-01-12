@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mplex/Config/fonction.dart';
 import 'package:mplex/Model/Class/probleme.dart';
@@ -18,8 +19,9 @@ class OpTableau extends StatefulWidget {
 }
 
 class _OpTableauState extends State<OpTableau> {
+  List<Tableau> tabs = [];
   getTabs(Probleme p) {
-    List<Tableau> tabs = Algorithme().start(probleme: p).toList();
+    tabs = Algorithme().start(probleme: widget.probleme).map((e) => e).toList();
     //  print(tabs);
   }
 
@@ -32,11 +34,6 @@ class _OpTableauState extends State<OpTableau> {
 
   @override
   Widget build(BuildContext context) {
-    print(Algorithme()
-        .start(probleme: widget.probleme)
-        .map((e) => e.cj_zj)
-        .toList());
-    List<Tableau> tabs = [];
     //.toList();
     return ListView.builder(
         shrinkWrap: true,
@@ -150,6 +147,78 @@ class OpTableauItem extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(height: 20),
+          Text("Solution " + (t.numero == 1 ? "initial" : ""),
+              style: Get.textTheme.subtitle2),
+          const SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Row(
+                children: [
+                  Text(
+                    "➤ Variable hors-base :",
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  const SizedBox(width: 10),
+                  Wrap(
+                    //runSpacing: 10,
+                    spacing: 30,
+                    children: t.variables[0]
+                        .where((e) =>
+                            t.vdb.every((element) => element.name != e.name))
+                        .map((e) => e.copyWith(value: 0).getNameValueWidget())
+                        .toList(),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Row(
+                children: [
+                  Text(
+                    "➤ Variable de base :",
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  const SizedBox(width: 10),
+                  Wrap(
+                    //runSpacing: 10,
+                    spacing: 30,
+                    children: t.vdb
+                        .map((e) =>
+                            e.getNameValueWidget2(t.st[t.vdb.indexOf(e)]))
+                        .toList(),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                context.watch<Probleme>().name,
+                style: Get.textTheme.subtitle2!.copyWith(fontSize: 19),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 6),
+                child: FaIcon(
+                  FontAwesomeIcons.equals,
+                  size: 12,
+                ),
+              ),
+              Text(
+                Fonction.removeDecimalZeroFormat(t.getZ()),
+                style: Get.textTheme.headline6,
+              )
+            ],
+          )
         ]),
       ),
     );

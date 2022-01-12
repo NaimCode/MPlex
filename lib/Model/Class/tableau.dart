@@ -34,6 +34,18 @@ class Tableau {
     return Solution(variable: v, value: val);
   }
 
+  double getZ() {
+    double value = 0;
+    for (int i = 0; i < vdb.length; i++) {
+      if (vdb[i].variableType == VariableType.DECISION) {
+        value += vdb[i].value * st[i];
+      }
+
+      //st[variables[0].indexWhere((element) => element.name == vdb[i].name)];
+    }
+    return value;
+  }
+
   int getVariableEntrante() {
     return this.cj_zj.indexOf(this.cj_zj.reduce(max));
   }
