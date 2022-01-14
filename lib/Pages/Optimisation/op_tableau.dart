@@ -46,6 +46,8 @@ class _OpTableauState extends State<OpTableau> {
   }
 }
 
+var i = 2;
+
 class OpTableauItem extends StatelessWidget {
   final Tableau t;
   const OpTableauItem({Key? key, required this.t}) : super(key: key);
