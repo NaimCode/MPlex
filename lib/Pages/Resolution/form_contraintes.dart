@@ -199,18 +199,18 @@ class ButtonAddContrainte extends StatelessWidget {
                                             value: Inegalite.INF_EGAL,
                                             child: FaIcon(FontAwesomeIcons
                                                 .lessThanEqual)),
-                                        DropdownMenuItem(
-                                            value: Inegalite.INF,
-                                            child: FaIcon(
-                                                FontAwesomeIcons.lessThan)),
+                                        // DropdownMenuItem(
+                                        //     value: Inegalite.INF,
+                                        //     child: FaIcon(
+                                        //         FontAwesomeIcons.lessThan)),
                                         DropdownMenuItem(
                                             value: Inegalite.SUP_EGAL,
                                             child: FaIcon(FontAwesomeIcons
                                                 .greaterThanEqual)),
-                                        DropdownMenuItem(
-                                            value: Inegalite.SUP,
-                                            child: FaIcon(
-                                                FontAwesomeIcons.greaterThan)),
+                                        // DropdownMenuItem(
+                                        //     value: Inegalite.SUP,
+                                        //     child: FaIcon(
+                                        //         FontAwesomeIcons.greaterThan)),
                                         DropdownMenuItem(
                                             value: Inegalite.EGAL,
                                             child: FaIcon(

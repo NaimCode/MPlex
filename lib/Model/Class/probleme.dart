@@ -39,11 +39,22 @@ class Probleme {
       if (forme.type != FormeType.STANDARD) {
         Probleme probleme = this;
         for (int i = 0; i < probleme.forme.contraintes.length; i++) {
+          double eValue;
+          switch (probleme.forme.contraintes[i].inegalite) {
+            case Inegalite.INF_EGAL:
+              eValue = 1.0;
+              break;
+            case Inegalite.SUP_EGAL:
+              eValue = -1.0;
+              break;
+            default:
+              eValue = 1.0;
+          }
           //Changement des inegalité des contraintes
           probleme.forme.contraintes[i].inegalite = Inegalite.EGAL;
           probleme.forme.contraintes[i].variables.add(Variable(
               name: "$nameVariableEcart${i + 1}",
-              value: 1,
+              value: eValue,
               variableType: VariableType.ECART));
         }
       } else {
