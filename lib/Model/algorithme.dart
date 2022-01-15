@@ -31,7 +31,7 @@ class Algorithme {
                 .toList())
             .toList(),
         problemeType: tab.problemeType);
-    while (verification(tableau: tab) != SolutionType.FINAL) {
+    while (verification(tableau: tab) == SolutionType.OPTIMAL) {
       tab = resolution(tableau: tab.copyWith(numero: tab.numero + 1));
       yield Tableau(
           numero: tab.numero,
@@ -53,12 +53,13 @@ class Algorithme {
   }
 
   Tableau resolution({required Tableau tableau}) {
-    //Constante.log.i(tableau);
+    Constante.log.i(tableau.variables);
 
     int variableEntrante = tableau.getVariableEntrante();
     List<Variable> colonne =
         tableau.getColonnePivot(variableEntrante: variableEntrante);
     int pivot = tableau.getPivot(colonne: colonne);
+    // Constante.log.d("pivot : $pivot , v : $variableEntrante");
     tableau
       ..updateVDB(pivot: pivot, variableEntrante: variableEntrante)
       ..updateVariablesAndST(pivot: pivot, variableEntrante: variableEntrante)
@@ -74,7 +75,11 @@ class Algorithme {
   SolutionType verification({required Tableau tableau}) {
     if (tableau.cj_zj.every((element) => element <= 0))
       return SolutionType.FINAL;
-    else
-      return SolutionType.OPTIMAL;
+    else {
+      if (tableau.numero >= 10) {
+        return SolutionType.IMPOSSIBLE;
+      } else
+        return SolutionType.OPTIMAL;
+    }
   }
 }

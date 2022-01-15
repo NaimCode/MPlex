@@ -23,7 +23,9 @@ enum VariableType {
   @HiveField(0)
   DECISION,
   @HiveField(1)
-  ECART
+  ECART,
+  @HiveField(2)
+  ARTIFICIELLE
 }
 @HiveType(typeId: 99)
 enum FormeType {
@@ -53,5 +55,7 @@ enum SolutionType {
   @HiveField(1)
   INITIAL,
   @HiveField(2)
-  OPTIMAL
+  OPTIMAL,
+  @HiveField(3)
+  IMPOSSIBLE
 }

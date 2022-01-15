@@ -53,6 +53,9 @@ class OpTableauItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Constante.log.v(t.variables.first.length);
+    // Constante.log.i(t.variables);
+    // return Text("${t.vdb.length} ${t.variables.length} ");
     return Padding(
       padding: const EdgeInsets.only(bottom: 30),
       child: CardForm(

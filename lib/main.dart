@@ -46,6 +46,7 @@ void main() async {
   if (Hive.box("settings").get("isDark") == null) {
     Hive.box("settings").put("isDark", false);
   }
+
   runApp(MPlex());
 }
 

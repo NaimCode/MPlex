@@ -76,6 +76,8 @@ class VariableTypeAdapter extends TypeAdapter<VariableType> {
         return VariableType.DECISION;
       case 1:
         return VariableType.ECART;
+      case 2:
+        return VariableType.ARTIFICIELLE;
       default:
         return VariableType.DECISION;
     }
@@ -89,6 +91,9 @@ class VariableTypeAdapter extends TypeAdapter<VariableType> {
         break;
       case VariableType.ECART:
         writer.writeByte(1);
+        break;
+      case VariableType.ARTIFICIELLE:
+        writer.writeByte(2);
         break;
     }
   }
@@ -234,6 +239,8 @@ class SolutionTypeAdapter extends TypeAdapter<SolutionType> {
         return SolutionType.INITIAL;
       case 2:
         return SolutionType.OPTIMAL;
+      case 3:
+        return SolutionType.IMPOSSIBLE;
       default:
         return SolutionType.FINAL;
     }
@@ -250,6 +257,9 @@ class SolutionTypeAdapter extends TypeAdapter<SolutionType> {
         break;
       case SolutionType.OPTIMAL:
         writer.writeByte(2);
+        break;
+      case SolutionType.IMPOSSIBLE:
+        writer.writeByte(3);
         break;
     }
   }

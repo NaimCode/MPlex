@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:mplex/Model/Class/tableau.dart';
+import 'package:mplex/Model/constante.dart';
 import 'package:mplex/Model/enum.dart';
 
 import 'contrainte.dart';
@@ -19,6 +20,8 @@ part 'probleme.g.dart';
 class Probleme {
   @HiveField(1)
   String nameVariableEcart = "e";
+  @HiveField(5)
+  String nameVariableArtificiel = "a";
   @HiveField(2)
   String name;
   @HiveField(3)
@@ -54,8 +57,14 @@ class Probleme {
           probleme.forme.contraintes[i].inegalite = Inegalite.EGAL;
           probleme.forme.contraintes[i].variables.add(Variable(
               name: "$nameVariableEcart${i + 1}",
-              value: 0, //eValue,
+              value: eValue, //eValue,
               variableType: VariableType.ECART));
+          if (eValue == -1) {
+            probleme.forme.contraintes[i].variables.add(Variable(
+                name: "$nameVariableArtificiel${i + 1}",
+                value: 1, //eValue,
+                variableType: VariableType.ARTIFICIELLE));
+          }
         }
       } else {
         throw Exception(Exceptions.DEJA_STANDARD);
@@ -70,31 +79,66 @@ class Probleme {
     Tableau? tableau;
     Probleme probleme = toStandart();
     probleme.forme.contraintes.map((e) => e.variables.last.value).toList();
+    List<Variable> ecart = [];
+    for (int i = 0; i < probleme.forme.contraintes.length; i++) {
+      List<Variable> temp = probleme.forme.contraintes[i].variables
+          .where((element) => element.variableType != VariableType.DECISION)
+          .toList();
+      if (temp.isNotEmpty) {
+        ecart.addAll(temp);
+      }
+    }
     List<double> cj = probleme.variables.map((e) => e.value).toList();
-    cj.addAll(List.filled(probleme.forme.contraintes.length, 0));
+    cj.addAll(List.filled(ecart.length, 0));
     List<double> zj = List.filled(cj.length, 0);
     List<double> cj_zj = cj.map((e) => e).toList();
     List<Variable> vdb = probleme.forme.contraintes
         .map((e) => Variable(
-            name: e.variables.last.name,
+            name: e.variables
+                .where((element) => element.variableType == VariableType.ECART)
+                .first
+                .name,
             value: 0,
             variableType: e.variables.last.variableType))
         .toList();
     List<double> st = probleme.forme.contraintes.map((e) => e.value).toList();
-    List<Variable> ecart =
-        probleme.forme.contraintes.map((e) => e.variables.last).toList();
+    // List<Variable> ecart = [];
+    // for (int i = 0; i < probleme.forme.contraintes.length; i++) {
+    //   List<Variable> temp = probleme.forme.contraintes[i].variables
+    //       .where((element) => element.variableType != VariableType.DECISION)
+    //       .toList();
+    //   if (temp.isNotEmpty) {
+    //     ecart.addAll(temp);
+    //   }
+    // }
+
+    // List<Variable> ecart = probleme.forme.contraintes
+    //     .map((e) => e.variables
+    //         .where((element) => element.variableType != VariableType.DECISION)
+    //         .toList())
+    //     .toList();
 
     //print(ecart);
     List<List<Variable>> matrice =
         probleme.forme.contraintes.map((e) => e.variables).toList();
     for (int i = 0; i < matrice.length; i++) {
-      matrice[i].removeLast();
+      // matrice[i].removeLast();
+      matrice[i].removeWhere(
+          (element) => element.variableType != VariableType.DECISION);
       for (int j = 0; j < ecart.length; j++) {
-        if (j == i) {
+        if (ecart[j].name.contains((1 + i).toString())) {
           matrice[i].add(ecart[j]);
         } else {
-          matrice[i].add(Variable(
-              name: ecart[j].name, value: 0, variableType: VariableType.ECART));
+          if (ecart[j].variableType == VariableType.ECART) {
+            matrice[i].add(Variable(
+                name: ecart[j].name,
+                value: 0,
+                variableType: VariableType.ECART));
+          } else
+            matrice[i].add(Variable(
+                name: ecart[j].name,
+                value: 0,
+                variableType: VariableType.ARTIFICIELLE));
         }
       }
     }
