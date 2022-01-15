@@ -24,7 +24,12 @@ class Algorithme {
         cj_zj: tab.cj_zj.map((e) => e).toList(),
         vdb: tab.vdb.map((e) => e).toList(),
         st: tab.st.map((e) => e).toList(),
-        variables: tab.variables.map((e) => e.map((e) => e).toList()).toList(),
+        variables: tab.variables
+            .map((e) => e
+                .map((e) => Variable(
+                    name: e.name, value: e.value, variableType: e.variableType))
+                .toList())
+            .toList(),
         problemeType: tab.problemeType);
     while (verification(tableau: tab) != SolutionType.FINAL) {
       tab = resolution(tableau: tab.copyWith(numero: tab.numero + 1));
@@ -35,8 +40,14 @@ class Algorithme {
           cj_zj: tab.cj_zj.map((e) => e).toList(),
           vdb: tab.vdb.map((e) => e).toList(),
           st: tab.st.map((e) => e).toList(),
-          variables:
-              tab.variables.map((e) => e.map((e) => e).toList()).toList(),
+          variables: tab.variables
+              .map((e) => e
+                  .map((e) => Variable(
+                      name: e.name,
+                      value: e.value,
+                      variableType: e.variableType))
+                  .toList())
+              .toList(),
           problemeType: tab.problemeType);
     }
   }
@@ -48,11 +59,11 @@ class Algorithme {
     List<Variable> colonne =
         tableau.getColonnePivot(variableEntrante: variableEntrante);
     int pivot = tableau.getPivot(colonne: colonne);
-    tableau.updateVDB(pivot: pivot, variableEntrante: variableEntrante);
-    tableau.updateVariablesAndST(
-        pivot: pivot, variableEntrante: variableEntrante);
-    tableau.updateZj();
-    tableau.updateCjZj();
+    tableau
+      ..updateVDB(pivot: pivot, variableEntrante: variableEntrante)
+      ..updateVariablesAndST(pivot: pivot, variableEntrante: variableEntrante)
+      ..updateZj()
+      ..updateCjZj();
 
     // return resolution(
     //     tableau: tableau.copyWith(numero: tableau.numero + 1));

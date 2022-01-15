@@ -22,6 +22,7 @@ class _OpTableauState extends State<OpTableau> {
   List<Tableau> tabs = [];
   getTabs(Probleme p) {
     tabs = Algorithme().start(probleme: widget.probleme).map((e) => e).toList();
+    //Constante.log.i(tabs.map((e) => e.variables).toList());
     //  print(tabs);
   }
 
@@ -45,8 +46,6 @@ class _OpTableauState extends State<OpTableau> {
         });
   }
 }
-
-var i = 2;
 
 class OpTableauItem extends StatelessWidget {
   final Tableau t;

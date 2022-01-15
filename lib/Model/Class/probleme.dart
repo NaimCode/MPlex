@@ -42,19 +42,19 @@ class Probleme {
           double eValue;
           switch (probleme.forme.contraintes[i].inegalite) {
             case Inegalite.INF_EGAL:
-              eValue = 1.0;
+              eValue = 1;
               break;
             case Inegalite.SUP_EGAL:
-              eValue = -1.0;
+              eValue = -1;
               break;
             default:
-              eValue = 1.0;
+              eValue = 1;
           }
           //Changement des inegalité des contraintes
           probleme.forme.contraintes[i].inegalite = Inegalite.EGAL;
           probleme.forme.contraintes[i].variables.add(Variable(
               name: "$nameVariableEcart${i + 1}",
-              value: eValue,
+              value: 0, //eValue,
               variableType: VariableType.ECART));
         }
       } else {
