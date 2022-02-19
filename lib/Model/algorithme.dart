@@ -76,7 +76,7 @@ class Algorithme {
     if (tableau.cj_zj.every((element) => element <= 0))
       return SolutionType.FINAL;
     else {
-      if (tableau.numero >= 10) {
+      if (tableau.numero >= 20) {
         return SolutionType.IMPOSSIBLE;
       } else
         return SolutionType.OPTIMAL;

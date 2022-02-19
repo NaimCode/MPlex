@@ -34,7 +34,7 @@ class MenuItem {
               child: Icon(
                 icon,
                 color: isCurrent ? Colors.white : Get.theme.iconTheme.color,
-                size: Get.theme.iconTheme.size,
+                size: 18,
               ),
             ),
             SizedBox(width: isCollapse ? 0 : 20),
@@ -63,20 +63,38 @@ class Menu {
   List<MenuItem> menu = [
     MenuItem(title: "Accueil", route: "/home", icon: Icons.home),
     MenuItem(
-        title: "Résolution",
-        route: "/resolution",
-        icon: FontAwesomeIcons.subscript),
+        title: "Maximisation",
+        route: "/maximisation",
+        icon: FontAwesomeIcons.lessThanEqual),
+    MenuItem(
+        title: "Minimisation",
+        route: "/minimisation",
+        icon: FontAwesomeIcons.greaterThanEqual),
     MenuItem(
         title: "Sauvegarde",
         route: "/sauvegarde",
         icon: Icons.bookmark_outlined),
+    MenuItem(
+        title: "Historique",
+        route: "/historique",
+        icon: FontAwesomeIcons.history),
     MenuItem(title: "Aide", route: "/aide", icon: Icons.help_rounded),
   ];
   Widget getWidget() {
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
-          children: menu.map((e) => e.getWidget()).toList(),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Résolution", style: Get.textTheme.caption),
+            ...menu.getRange(0, 3).map((e) => e.getWidget()).toList(),
+            const Divider(),
+            Text("Outils", style: Get.textTheme.caption),
+            ...menu.getRange(3, 5).map((e) => e.getWidget()).toList(),
+            const Divider(),
+            Text("Plus", style: Get.textTheme.caption),
+            ...menu.getRange(5, menu.length).map((e) => e.getWidget()).toList()
+          ],
         ),
       ),
     );

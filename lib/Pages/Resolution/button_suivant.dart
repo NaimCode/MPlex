@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mplex/Config/fonction.dart';
 import 'package:mplex/Pages/Optimisation/index.dart';
 import 'package:mplex/Pages/Resolution/controller.dart';
-
+import 'package:provider/provider.dart';
 import '../../page.dart';
 
 class ButtonSuivant extends StatelessWidget {
@@ -13,9 +13,10 @@ class ButtonSuivant extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      FormController _ =context.watch<FormController>();
     return Obx(() => Tooltip(
-          message: FormController.problemeContrainte.isNotEmpty &&
-                  FormController.problemeVariable.isNotEmpty
+          message: _.problemeContrainte.isNotEmpty &&
+                  _.problemeVariable.isNotEmpty
               ? "Lancer l'optimisation"
               : "Compléter le formulaire",
           child: Container(
@@ -28,15 +29,15 @@ class ButtonSuivant extends StatelessWidget {
                 child: Text(
                   "Lancer",
                   style: Get.theme.textTheme.bodyText2!.copyWith(
-                      color: FormController.problemeContrainte.isNotEmpty &&
-                              FormController.problemeVariable.isNotEmpty
+                      color: _.problemeContrainte.isNotEmpty &&
+                              _.problemeVariable.isNotEmpty
                           ? Colors.white
                           : Colors.black38),
                 ),
-                onPressed: FormController.problemeContrainte.isNotEmpty &&
-                        FormController.problemeVariable.isNotEmpty
+                onPressed: _.problemeContrainte.isNotEmpty &&
+                        _.problemeVariable.isNotEmpty
                     ? () => Fonction.toOptimisation(
-                        probleme: FormController.toProbleme().copyWith())
+                        probleme: _.toProbleme().copyWith())
                     : null,
                 // icon: Icon(
                 //   Icons.lau,

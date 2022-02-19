@@ -9,12 +9,14 @@ import 'package:mplex/Model/Class/variable.dart';
 import 'package:mplex/Model/enum.dart';
 
 class FormController {
-  static Rx<ProblemeType> problemeTypeController = ProblemeType.MAX.obs;
-  static Rx<TextEditingController> problemeName = TextEditingController().obs;
-  static RxList problemeVariable = [].obs;
-  static RxList problemeContrainte = [].obs;
-
-  static Probleme toProbleme() {
+  Rx<ProblemeType> problemeTypeController = ProblemeType.MAX.obs;
+  Rx<TextEditingController> problemeName = TextEditingController().obs;
+  RxList problemeVariable = [].obs;
+  RxList problemeContrainte = [].obs;
+  FormController(ProblemeType problemeTypeController) {
+    this.problemeTypeController.value = problemeTypeController;
+  }
+  Probleme toProbleme() {
     return Probleme(
         forme: Forme(
             type: FormeType.CANONIQUE,
@@ -27,7 +29,7 @@ class FormController {
         variables: problemeVariable.map((element) => element).toList().cast());
   }
 
-  static Widget getApercuFonctionObjective() {
+  Widget getApercuFonctionObjective() {
     return Row(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,7 +54,7 @@ class FormController {
     );
   }
 
-  static Widget getApercuFormeCanonique() {
+  Widget getApercuFormeCanonique() {
     List<Contrainte> cons = [];
     for (int i = 0; i < problemeContrainte.length; i++) {
       cons.add(problemeContrainte[i].copyWith());

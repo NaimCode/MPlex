@@ -6,12 +6,14 @@ import 'package:mplex/Model/Class/variable.dart';
 import 'package:mplex/Model/enum.dart';
 import 'package:mplex/Pages/Resolution/controller.dart';
 import 'package:mplex/Widgets/mini.dart';
+import 'package:provider/provider.dart';
 
 class FormContraintes extends StatelessWidget {
   const FormContraintes({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    FormController _ = context.watch<FormController>();
     return Obx(() => CardForm(
           widget: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,17 +29,12 @@ class FormContraintes extends StatelessWidget {
                   ),
                   const ButtonAddContrainte(),
                   Visibility(
-                    visible: FormController.problemeContrainte.isNotEmpty,
+                    visible: _.problemeContrainte.isNotEmpty,
                     child: Tooltip(
                       message: "Effacer les contraintes",
                       child: TextButton.icon(
                           style: TextButton.styleFrom(primary: Colors.red),
                           label: Text("Effacer", style: Get.textTheme.caption),
-                          // tooltip: "Effacer",
-                          // focusColor: Colors.transparent,
-                          // splashColor: Colors.transparent,
-                          // highlightColor: Colors.transparent,
-                          // hoverColor: Colors.transparent,
                           onPressed: () => Get.defaultDialog(
                                 title: "Confirmation",
                                 middleTextStyle: Get.textTheme.caption,
@@ -54,7 +51,7 @@ class FormContraintes extends StatelessWidget {
                                           primary: Colors.red,
                                           onSurface: Colors.red),
                                       onPressed: () {
-                                        FormController.problemeContrainte
+                                        _.problemeContrainte
                                             .clear();
                                         Get.back();
                                       },
@@ -72,12 +69,11 @@ class FormContraintes extends StatelessWidget {
                 ],
               ),
               const Divider(),
-              ...FormController.problemeContrainte
+              ..._.problemeContrainte
                   .map((element) => element.getWidget(
                       funct: () =>
-                          FormController.problemeContrainte.remove(element)))
+                          _.problemeContrainte.remove(element)))
                   .toList()
-              // const SizedBox(height: 15),
             ],
           ),
         ));
@@ -91,20 +87,21 @@ class ButtonAddContrainte extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      FormController _ =context.watch<FormController>();
     return Tooltip(
-      message: FormController.problemeVariable.isEmpty
+      message: _.problemeVariable.isEmpty
           ? ""
           : "Ajouter une contrainte",
       child: Obx(() => TextButton.icon(
             style: TextButton.styleFrom(primary: Get.theme.primaryColor),
             label: Text("Ajouter", style: Get.textTheme.caption),
             icon: const Icon(Icons.add_box_rounded),
-            onPressed: FormController.problemeVariable.isEmpty
+            onPressed: _.problemeVariable.isEmpty
                 ? null
                 : () async {
                     List<TextEditingController> controller = [];
                     for (int i = 0;
-                        i < FormController.problemeVariable.length;
+                        i < _.problemeVariable.length;
                         i++) {
                       controller.add(TextEditingController());
                     }
@@ -175,7 +172,7 @@ class ButtonAddContrainte extends StatelessWidget {
                                             ),
                                             const SizedBox(width: 5),
                                             VariableNameWidget2(
-                                                number: FormController
+                                                number: _
                                                     .problemeVariable[
                                                         controller.indexOf(c)]
                                                     .name)
@@ -189,32 +186,22 @@ class ButtonAddContrainte extends StatelessWidget {
                                   () => DropdownButton<Inegalite>(
                                       iconSize: 12,
                                       underline: const SizedBox(),
-                                      // hint:  Text("Select item"),
                                       value: inegalite.value,
                                       onChanged: (var value) {
                                         inegalite.value = value!;
                                       },
-                                      items: const [
-                                        DropdownMenuItem(
-                                            value: Inegalite.INF_EGAL,
-                                            child: FaIcon(FontAwesomeIcons
-                                                .lessThanEqual)),
-                                        // DropdownMenuItem(
-                                        //     value: Inegalite.INF,
-                                        //     child: FaIcon(
-                                        //         FontAwesomeIcons.lessThan)),
-                                        DropdownMenuItem(
-                                            value: Inegalite.SUP_EGAL,
-                                            child: FaIcon(FontAwesomeIcons
-                                                .greaterThanEqual)),
-                                        // DropdownMenuItem(
-                                        //     value: Inegalite.SUP,
-                                        //     child: FaIcon(
-                                        //         FontAwesomeIcons.greaterThan)),
-                                        DropdownMenuItem(
-                                            value: Inegalite.EGAL,
-                                            child: FaIcon(
-                                                FontAwesomeIcons.equals)),
+                                      items: [
+                                        _.problemeTypeController
+                                                    .value ==
+                                                ProblemeType.MAX
+                                            ? const DropdownMenuItem(
+                                                value: Inegalite.INF_EGAL,
+                                                child: FaIcon(FontAwesomeIcons
+                                                    .lessThanEqual))
+                                            : const DropdownMenuItem(
+                                                value: Inegalite.SUP_EGAL,
+                                                child: FaIcon(FontAwesomeIcons
+                                                    .greaterThanEqual)),
                                       ]),
                                 ),
                                 const SizedBox(
@@ -240,7 +227,7 @@ class ButtonAddContrainte extends StatelessWidget {
                                   ),
                                 ),
                                 // VariableNameWidget(
-                                //     number: FormController.problemeVariable.length + 1)
+                                //     number: _.problemeVariable.length + 1)
                               ],
                             ),
                           ),
@@ -249,7 +236,7 @@ class ButtonAddContrainte extends StatelessWidget {
                       Contrainte contrainte = Contrainte(
                           variables: controller
                               .map((e) => Variable(
-                                  name: FormController
+                                  name: _
                                       .problemeVariable[controller.indexOf(e)]
                                       .name,
                                   value: double.parse(e.text),
@@ -257,7 +244,7 @@ class ButtonAddContrainte extends StatelessWidget {
                               .toList(),
                           inegalite: inegalite.value,
                           value: double.parse(controllerValue.value.text));
-                      FormController.problemeContrainte.add(contrainte);
+                      _.problemeContrainte.add(contrainte);
                     }
                   },
           )),

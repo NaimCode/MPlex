@@ -7,12 +7,14 @@ import 'package:mplex/Model/constante.dart';
 import 'package:mplex/Model/enum.dart';
 import 'package:mplex/Pages/Resolution/controller.dart';
 import 'package:mplex/Widgets/mini.dart';
+import 'package:provider/provider.dart';
 
 class FormVariables extends StatelessWidget {
   const FormVariables({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    FormController _ = context.watch<FormController>();
     return CardForm(
         widget: Obx(() => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +29,7 @@ class FormVariables extends StatelessWidget {
                     ),
                     const ButtonAddVariable(),
                     Visibility(
-                      visible: FormController.problemeVariable.isNotEmpty,
+                      visible: _.problemeVariable.isNotEmpty,
                       child: Tooltip(
                         message: "Effacer les variables",
                         child: TextButton.icon(
@@ -56,10 +58,8 @@ class FormVariables extends StatelessWidget {
                                             primary: Colors.red,
                                             onSurface: Colors.red),
                                         onPressed: () {
-                                          FormController.problemeVariable
-                                              .clear();
-                                          FormController.problemeContrainte
-                                              .clear();
+                                          _.problemeVariable.clear();
+                                          _.problemeContrainte.clear();
                                           Get.back();
                                         },
                                         child: Text(
@@ -80,7 +80,7 @@ class FormVariables extends StatelessWidget {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   alignment: WrapAlignment.center,
                   runAlignment: WrapAlignment.center,
-                  children: FormController.problemeVariable
+                  children: _.problemeVariable
                       .map((element) => element.getWidget())
                       .toList()
                       .cast(),
@@ -97,15 +97,15 @@ class ButtonAddVariable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FormController _ = context.watch<FormController>();
     return Obx(() => Tooltip(
-          message: FormController.problemeContrainte.isNotEmpty
-              ? ""
-              : "Ajouter une variable",
+          message:
+              _.problemeContrainte.isNotEmpty ? "" : "Ajouter une variable",
           child: TextButton.icon(
             style: TextButton.styleFrom(primary: Get.theme.primaryColor),
             label: Text("Ajouter", style: Get.textTheme.caption),
             icon: const Icon(Icons.add_box_rounded),
-            onPressed: FormController.problemeContrainte.isNotEmpty
+            onPressed: _.problemeContrainte.isNotEmpty
                 ? null
                 : () async {
                     TextEditingController controller = TextEditingController();
@@ -165,17 +165,14 @@ class ButtonAddVariable extends StatelessWidget {
                               ),
                               const SizedBox(width: 15),
                               VariableNameWidget(
-                                  number:
-                                      FormController.problemeVariable.length +
-                                          1)
+                                  number: _.problemeVariable.length + 1)
                             ],
                           ),
                         ));
 
                     if (check != 0) {
-                      FormController.problemeVariable.add(Variable(
-                          name:
-                              "x${FormController.problemeVariable.length + 1}",
+                      _.problemeVariable.add(Variable(
+                          name: "x${_.problemeVariable.length + 1}",
                           value: check,
                           variableType: VariableType.DECISION));
                     }

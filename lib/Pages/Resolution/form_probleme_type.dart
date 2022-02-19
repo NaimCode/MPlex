@@ -3,12 +3,14 @@ import 'package:get/get.dart';
 import 'package:mplex/Model/enum.dart';
 import 'package:mplex/Pages/Resolution/controller.dart';
 import 'package:mplex/Widgets/mini.dart';
+import 'package:provider/provider.dart';
 
 class FormProblemeType extends StatelessWidget {
   const FormProblemeType({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    FormController _ = context.watch<FormController>();
     return Obx(() => CardForm(
           widget: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,36 +30,36 @@ class FormProblemeType extends StatelessWidget {
                           vertical: 7, horizontal: 10),
                       child: InkWell(
                           autofocus: true,
-                          onTap: () => FormController
-                              .problemeTypeController.value = ProblemeType.MAX,
+                          onTap: () =>
+                              _.problemeTypeController.value = ProblemeType.MAX,
                           child: Text(
                             "Maximisation",
                             style: Get.theme.textTheme.bodyText2,
                           )),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(3),
-                        color: FormController.problemeTypeController.value ==
-                                ProblemeType.MAX
-                            ? Get.theme.scaffoldBackgroundColor
-                            : null,
+                        color:
+                            _.problemeTypeController.value == ProblemeType.MAX
+                                ? Get.theme.scaffoldBackgroundColor
+                                : null,
                       )),
                   const SizedBox(width: 10),
                   Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 7, horizontal: 10),
                       child: InkWell(
-                          onTap: () => FormController
-                              .problemeTypeController.value = ProblemeType.MIN,
+                          onTap: () =>
+                              _.problemeTypeController.value = ProblemeType.MIN,
                           child: Text(
                             "Minimisation",
                             style: Get.theme.textTheme.bodyText2,
                           )),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(3),
-                        color: FormController.problemeTypeController.value ==
-                                ProblemeType.MIN
-                            ? Get.theme.scaffoldBackgroundColor
-                            : null,
+                        color:
+                            _.problemeTypeController.value == ProblemeType.MIN
+                                ? Get.theme.scaffoldBackgroundColor
+                                : null,
                       )),
                 ],
               ),

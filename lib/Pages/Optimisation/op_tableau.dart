@@ -36,14 +36,20 @@ class _OpTableauState extends State<OpTableau> {
   @override
   Widget build(BuildContext context) {
     //.toList();
-    return ListView.builder(
-        shrinkWrap: true,
-        // physics: const NeverScrollableScrollPhysics(),
-        itemCount: tabs.length,
-        itemBuilder: (context, index) {
-          //print(tabs[index].vdb);
-          return OpTableauItem(t: tabs[index]);
-        });
+    return tabs.length == 20
+        ? CardForm(
+            widget: const Text(
+            "Ce problème n'admet pas de solution optimale !",
+            style: TextStyle(color: Colors.red),
+          ))
+        : ListView.builder(
+            shrinkWrap: true,
+            // physics: const NeverScrollableScrollPhysics(),
+            itemCount: tabs.length,
+            itemBuilder: (context, index) {
+              //print(tabs[index].vdb);
+              return OpTableauItem(t: tabs[index]);
+            });
   }
 }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mplex/Pages/Resolution/controller.dart';
+import 'package:provider/provider.dart';
 
 class ButtonApercu extends StatelessWidget {
   const ButtonApercu({
@@ -9,6 +10,7 @@ class ButtonApercu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FormController _ = context.watch<FormController>();
     return Tooltip(
       message: "Voir l'aperçu du problème",
       child: Container(
@@ -33,14 +35,14 @@ class ButtonApercu extends StatelessWidget {
                           style: Get.theme.textTheme.caption,
                         ),
                         const SizedBox(height: 3),
-                        FormController.getApercuFonctionObjective(),
+                        _.getApercuFonctionObjective(),
                         const SizedBox(height: 6),
                         Text(
                           "Forme canonique:",
                           style: Get.theme.textTheme.caption,
                         ),
                         const SizedBox(height: 3),
-                        FormController.getApercuFormeCanonique()
+                        _.getApercuFormeCanonique()
                       ],
                     ),
                   ),

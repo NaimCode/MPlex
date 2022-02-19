@@ -61,7 +61,7 @@ class MPlex extends StatelessWidget {
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             theme: box.get("isDark") ? ThemeMPlex.dark : ThemeMPlex.light,
-            initialRoute: "/resolution",
+            initialRoute: "/maximisation",
             getPages: [
               GetPage(
                   preventDuplicates: true,
@@ -75,9 +75,21 @@ class MPlex extends StatelessWidget {
                   preventDuplicates: true,
                   transitionDuration: const Duration(milliseconds: 700),
                   transition: Transition.fade,
-                  name: "/resolution",
+                  name: "/maximisation",
                   page: () => const Root(
-                        rightSide: Resolution(),
+                        rightSide: Resolution(
+                          type: ProblemeType.MAX,
+                        ),
+                      )),
+              GetPage(
+                  preventDuplicates: true,
+                  transitionDuration: const Duration(milliseconds: 700),
+                  transition: Transition.fade,
+                  name: "/minimisation",
+                  page: () => const Root(
+                        rightSide: Resolution(
+                          type: ProblemeType.MIN,
+                        ),
                       )),
               GetPage(
                   preventDuplicates: true,
@@ -91,9 +103,17 @@ class MPlex extends StatelessWidget {
                   preventDuplicates: true,
                   transitionDuration: const Duration(milliseconds: 400),
                   transition: Transition.fade,
+                  name: "/historique",
+                  page: () => Root(
+                        rightSide: Home(),
+                      )),
+              GetPage(
+                  preventDuplicates: true,
+                  transitionDuration: const Duration(milliseconds: 400),
+                  transition: Transition.fade,
                   name: "/aide",
-                  page: () => const Root(
-                        rightSide: Resolution(),
+                  page: () => Root(
+                        rightSide: Home(),
                       )),
             ],
           );
