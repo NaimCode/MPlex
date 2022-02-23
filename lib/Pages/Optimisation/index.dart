@@ -67,7 +67,6 @@ class _OptimisationState extends State<Optimisation> {
                               builder: (context, Box b, _) {
                                 List<Probleme> problemes =
                                     b.values.toList().cast();
-
                                 bool exist = problemes.any(
                                     (element) => element == widget.probleme);
                                 return Tooltip(

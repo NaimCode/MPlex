@@ -19,11 +19,6 @@ class Resolution extends StatefulWidget {
   _ResolutionState createState() => _ResolutionState();
 }
 
-// obs variables
-
-///
-
-///
 class _ResolutionState extends State<Resolution> {
   ScrollController scrollController = ScrollController();
   @override
@@ -59,7 +54,6 @@ class _ResolutionState extends State<Resolution> {
               child: ListView(
                 padding: const EdgeInsets.only(top: 13.0, left: 13, right: 13),
                 controller: scrollController,
-                //crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Divider(),
                   const SizedBox(height: 10),
@@ -72,8 +66,6 @@ class _ResolutionState extends State<Resolution> {
                     "Completez le formulaire suivant afin de lancer la ${widget.type == ProblemeType.MAX ? "maximisation" : "minimisation"}",
                     style: Get.theme.textTheme.caption,
                   ),
-                  // const SizedBox(height: 30),
-                  // const FormProblemeType(),
                   const SizedBox(height: 30),
                   const FormVariables(),
                   const SizedBox(height: 30),

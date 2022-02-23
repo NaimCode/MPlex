@@ -51,8 +51,7 @@ class FormContraintes extends StatelessWidget {
                                           primary: Colors.red,
                                           onSurface: Colors.red),
                                       onPressed: () {
-                                        _.problemeContrainte
-                                            .clear();
+                                        _.problemeContrainte.clear();
                                         Get.back();
                                       },
                                       child: Text(
@@ -71,8 +70,7 @@ class FormContraintes extends StatelessWidget {
               const Divider(),
               ..._.problemeContrainte
                   .map((element) => element.getWidget(
-                      funct: () =>
-                          _.problemeContrainte.remove(element)))
+                      funct: () => _.problemeContrainte.remove(element)))
                   .toList()
             ],
           ),
@@ -87,11 +85,9 @@ class ButtonAddContrainte extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      FormController _ =context.watch<FormController>();
+    FormController _ = context.watch<FormController>();
     return Tooltip(
-      message: _.problemeVariable.isEmpty
-          ? ""
-          : "Ajouter une contrainte",
+      message: _.problemeVariable.isEmpty ? "" : "Ajouter une contrainte",
       child: Obx(() => TextButton.icon(
             style: TextButton.styleFrom(primary: Get.theme.primaryColor),
             label: Text("Ajouter", style: Get.textTheme.caption),
@@ -100,13 +96,14 @@ class ButtonAddContrainte extends StatelessWidget {
                 ? null
                 : () async {
                     List<TextEditingController> controller = [];
-                    for (int i = 0;
-                        i < _.problemeVariable.length;
-                        i++) {
+                    for (int i = 0; i < _.problemeVariable.length; i++) {
                       controller.add(TextEditingController());
                     }
                     GlobalKey<FormState> formKey = GlobalKey<FormState>();
-                    Rx<Inegalite> inegalite = Inegalite.INF_EGAL.obs;
+                    Rx<Inegalite> inegalite =
+                        _.problemeTypeController.value == ProblemeType.MAX
+                            ? Inegalite.INF_EGAL.obs
+                            : Inegalite.SUP_EGAL.obs;
                     TextEditingController controllerValue =
                         TextEditingController();
                     var check = await Get.defaultDialog(
@@ -191,8 +188,7 @@ class ButtonAddContrainte extends StatelessWidget {
                                         inegalite.value = value!;
                                       },
                                       items: [
-                                        _.problemeTypeController
-                                                    .value ==
+                                        _.problemeTypeController.value ==
                                                 ProblemeType.MAX
                                             ? const DropdownMenuItem(
                                                 value: Inegalite.INF_EGAL,

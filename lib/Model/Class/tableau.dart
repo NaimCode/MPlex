@@ -47,7 +47,8 @@ class Tableau {
   }
 
   int getVariableEntrante() {
-    return this.cj_zj.indexOf(this.cj_zj.reduce(max));
+    return this.cj_zj.indexOf(
+        this.cj_zj.reduce(problemeType == ProblemeType.MAX ? max : min));
   }
 
   List<Variable> getColonnePivot({required int variableEntrante}) {

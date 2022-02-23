@@ -31,7 +31,8 @@ class Algorithme {
                 .toList())
             .toList(),
         problemeType: tab.problemeType);
-    while (verification(tableau: tab) == SolutionType.OPTIMAL) {
+    while (verification(tableau: tab, type: probleme.type) ==
+        SolutionType.OPTIMAL) {
       tab = resolution(tableau: tab.copyWith(numero: tab.numero + 1));
       yield Tableau(
           numero: tab.numero,
@@ -72,8 +73,11 @@ class Algorithme {
     return tableau;
   }
 
-  SolutionType verification({required Tableau tableau}) {
-    if (tableau.cj_zj.every((element) => element <= 0))
+  SolutionType verification(
+      {required Tableau tableau, required ProblemeType type}) {
+    if (type == ProblemeType.MAX
+        ? tableau.cj_zj.every((element) => element <= 0)
+        : tableau.cj_zj.every((element) => element >= 0))
       return SolutionType.FINAL;
     else {
       if (tableau.numero >= 20) {

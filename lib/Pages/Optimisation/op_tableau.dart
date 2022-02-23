@@ -6,6 +6,7 @@ import 'package:mplex/Model/Class/probleme.dart';
 import 'package:mplex/Model/Class/tableau.dart';
 import 'package:mplex/Model/algorithme.dart';
 import 'package:mplex/Model/constante.dart';
+import 'package:mplex/Model/enum.dart';
 import 'package:mplex/Widgets/mini.dart';
 import 'package:provider/provider.dart';
 
