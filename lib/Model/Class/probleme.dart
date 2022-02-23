@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:mplex/Config/const.dart';
 
 import 'package:mplex/Model/Class/tableau.dart';
 import 'package:mplex/Model/constante.dart';
@@ -36,6 +37,35 @@ class Probleme {
     required this.name,
     required this.variables,
   });
+
+  Probleme toDual() {
+    List<Variable> dualVariables = [];
+    for (int i = 0; i < forme.contraintes.length; i++) {
+      dualVariables.add(Variable(
+          name: dualVariableName + (i + 1).toString(),
+          value: forme.contraintes[i].value,
+          variableType: VariableType.DECISION));
+    }
+    List<Contrainte> dualContraintes = [];
+    for (int i = 0; i < variables.length; i++) {
+      List<Variable> tempVariable = [];
+      for (int j = 0; j < forme.contraintes.length; j++) {
+        tempVariable.add(Variable(
+            name: dualVariableName + (j + 1).toString(),
+            value: forme.contraintes[j].variables[i].value,
+            variableType: VariableType.DECISION));
+      }
+      dualContraintes.add(Contrainte(
+          variables: tempVariable,
+          inegalite: Inegalite.INF_EGAL,
+          value: variables[i].value));
+    }
+    return Probleme(
+        forme: Forme(type: FormeType.CANONIQUE, contraintes: dualContraintes),
+        type: ProblemeType.MAX,
+        name: "W",
+        variables: dualVariables);
+  }
 
   Probleme toStandart() {
     try {
