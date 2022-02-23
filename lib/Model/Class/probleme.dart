@@ -39,6 +39,7 @@ class Probleme {
   });
 
   Probleme toDual() {
+    var temp;
     List<Variable> dualVariables = [];
     for (int i = 0; i < forme.contraintes.length; i++) {
       dualVariables.add(Variable(
