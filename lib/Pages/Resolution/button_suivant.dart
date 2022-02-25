@@ -13,37 +13,36 @@ class ButtonSuivant extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      FormController _ =context.watch<FormController>();
-    return Obx(() => Tooltip(
-          message: _.problemeContrainte.isNotEmpty &&
-                  _.problemeVariable.isNotEmpty
-              ? "Lancer l'optimisation"
-              : "Compléter le formulaire",
-          child: Container(
-              decoration: BoxDecoration(
-                  color: Get.theme.backgroundColor,
-                  borderRadius: BorderRadius.circular(5)),
-              child: ElevatedButton(
-                style:
-                    ElevatedButton.styleFrom(primary: Get.theme.primaryColor),
-                child: Text(
-                  "Lancer",
-                  style: Get.theme.textTheme.bodyText2!.copyWith(
-                      color: _.problemeContrainte.isNotEmpty &&
-                              _.problemeVariable.isNotEmpty
-                          ? Colors.white
-                          : Colors.black38),
-                ),
-                onPressed: _.problemeContrainte.isNotEmpty &&
+    FormController _ = context.watch<FormController>();
+    return Obx(
+        () => _.problemeContrainte.isNotEmpty && _.problemeVariable.isNotEmpty
+            ? Tooltip(
+                message: _.problemeContrainte.isNotEmpty &&
                         _.problemeVariable.isNotEmpty
-                    ? () => Fonction.toOptimisation(
-                        probleme: _.toProbleme().copyWith())
-                    : null,
-                // icon: Icon(
-                //   Icons.lau,
-                //   color: Get.theme.iconTheme.color,
-                // ),
-              )),
-        ));
+                    ? "Lancer l'optimisation"
+                    : "Compléter le formulaire",
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: Get.theme.backgroundColor,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(primary: Colors.white),
+                      child: Text(
+                        "Lancer",
+                        style: Get.theme.textTheme.bodyText2!
+                            .copyWith(color: Colors.black),
+                      ),
+                      onPressed: _.problemeContrainte.isNotEmpty &&
+                              _.problemeVariable.isNotEmpty
+                          ? () => Fonction.toOptimisation(
+                              probleme: _.toProbleme().copyWith())
+                          : null,
+                      // icon: Icon(
+                      //   Icons.lau,
+                      //   color: Get.theme.iconTheme.color,
+                      // ),
+                    )),
+              )
+            : Container());
   }
 }

@@ -39,6 +39,7 @@ class _ResolutionState extends State<Resolution> {
       child: Padding(
         padding: const EdgeInsets.only(right: 10),
         child: Scaffold(
+          backgroundColor: Colors.transparent,
           appBar: AppBar(
               automaticallyImplyLeading: false,
               centerTitle: false,
@@ -59,12 +60,15 @@ class _ResolutionState extends State<Resolution> {
                   const SizedBox(height: 10),
                   Text(
                     "Optimisation linéaire",
-                    style: Get.theme.textTheme.headline5,
+                    style: Get.theme.textTheme.headline5!.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     "Completez le formulaire suivant afin de lancer la ${widget.type == ProblemeType.MAX ? "maximisation" : "minimisation"}",
-                    style: Get.theme.textTheme.caption,
+                    style: Get.theme.textTheme.caption!.copyWith(
+                      color: Colors.white,
+                    ),
                   ),
                   const SizedBox(height: 30),
                   const FormVariables(),

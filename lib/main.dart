@@ -15,7 +15,7 @@ import 'package:mplex/Model/constante.dart';
 import 'package:mplex/Pages/Resolution/index.dart';
 import 'package:mplex/Pages/Sauvegarde/index.dart';
 import 'package:mplex/page.dart';
-
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'Model/Class/variable.dart';
 import 'Model/Class/variable.dart';
 import 'Pages/home.dart';
@@ -48,6 +48,12 @@ void main() async {
   }
 
   runApp(MPlex());
+//   doWhenWindowReady(() {
+//     final win = appWindow;
+
+//     win.title = "Custom window with Flutter";
+//     win.show();
+//   });
 }
 
 class MPlex extends StatelessWidget {
@@ -64,17 +70,16 @@ class MPlex extends StatelessWidget {
             initialRoute: "/maximisation",
             getPages: [
               GetPage(
-                  preventDuplicates: true,
-                  transitionDuration: const Duration(milliseconds: 700),
-                  transition: Transition.fade,
-                  name: "/home",
-                  page: () => Root(
-                        rightSide: Home(),
-                      )),
+                preventDuplicates: true,
+                // transitionDuration: const Duration(milliseconds: 700),
+                // transition: Transition.fade,
+                name: "/home",
+                page: () => Home(),
+              ),
               GetPage(
                   preventDuplicates: true,
-                  transitionDuration: const Duration(milliseconds: 700),
-                  transition: Transition.fade,
+                  // transitionDuration: const Duration(milliseconds: 700),
+                  //  transition: Transition.fade,
                   name: "/maximisation",
                   page: () => const Root(
                         rightSide: Resolution(
@@ -83,8 +88,8 @@ class MPlex extends StatelessWidget {
                       )),
               GetPage(
                   preventDuplicates: true,
-                  transitionDuration: const Duration(milliseconds: 700),
-                  transition: Transition.fade,
+                  // transitionDuration: const Duration(milliseconds: 700),
+                  //  transition: Transition.fade,
                   name: "/minimisation",
                   page: () => const Root(
                         rightSide: Resolution(
@@ -93,24 +98,24 @@ class MPlex extends StatelessWidget {
                       )),
               GetPage(
                   preventDuplicates: true,
-                  transitionDuration: const Duration(milliseconds: 700),
-                  transition: Transition.fade,
+                  //  transitionDuration: const Duration(milliseconds: 700),
+                  // transition: Transition.fade,
                   name: "/sauvegarde",
                   page: () => const Root(
                         rightSide: SauvegardePage(),
                       )),
               GetPage(
                   preventDuplicates: true,
-                  transitionDuration: const Duration(milliseconds: 400),
-                  transition: Transition.fade,
+                  // transitionDuration: const Duration(milliseconds: 400),
+                  // transition: Transition.fade,
                   name: "/historique",
                   page: () => Root(
                         rightSide: Home(),
                       )),
               GetPage(
                   preventDuplicates: true,
-                  transitionDuration: const Duration(milliseconds: 400),
-                  transition: Transition.fade,
+                  //  transitionDuration: const Duration(milliseconds: 400),
+                  //  transition: Transition.fade,
                   name: "/aide",
                   page: () => Root(
                         rightSide: Home(),

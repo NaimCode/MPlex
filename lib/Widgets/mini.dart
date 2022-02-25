@@ -6,13 +6,15 @@ class CardForm extends StatelessWidget {
   Widget widget;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: Get.theme.backgroundColor,
+    return Card(
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: Get.theme.backgroundColor,
+        ),
+        child: widget,
       ),
-      child: widget,
     );
   }
 }

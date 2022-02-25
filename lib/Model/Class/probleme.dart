@@ -290,7 +290,7 @@ class Probleme {
         ),
         const SizedBox(width: 3),
         Text(
-          "Z",
+          name,
           style: Get.textTheme.headline6!.copyWith(fontSize: 18),
         ),
         const Padding(

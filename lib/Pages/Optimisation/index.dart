@@ -125,23 +125,49 @@ class _OptimisationState extends State<Optimisation> {
               child: CustomScrollView(
                 controller: ScrollController(),
                 slivers: [
-                  SliverList(
-                      delegate: SliverChildListDelegate([
-                    const OpFonctionObjective(),
-                    const SizedBox(height: 30),
-                    const OpFormeCanonique(),
-                    const SizedBox(height: 30),
-                    const OpFormeStandard(),
-                    const SizedBox(height: 30),
-                    OpTableau(
-                        probleme: Probleme(
-                      forme: widget.probleme.forme.copyWith(),
-                      type: widget.probleme.type,
-                      name: widget.probleme.name,
-                      variables:
-                          widget.probleme.variables.map((e) => e).toList(),
-                    ))
-                  ]))
+                  widget.probleme.type == ProblemeType.MAX
+                      ? SliverList(
+                          delegate: SliverChildListDelegate([
+                          const OpFonctionObjective(),
+                          const SizedBox(height: 30),
+                          const OpFormeCanonique(),
+                          const SizedBox(height: 30),
+                          const OpFormeStandard(),
+                          const SizedBox(height: 30),
+                          OpTableau(
+                              probleme: Probleme(
+                            forme: p.forme.copyWith(),
+                            type: p.type,
+                            name: p.name,
+                            variables: p.variables.map((e) => e).toList(),
+                          ))
+                        ]))
+                      : SliverList(
+                          delegate: SliverChildListDelegate([
+                          OpFonctionObjectiveCust(
+                              p: widget.probleme,
+                              title: "Primal: fonction objective"),
+                          const SizedBox(height: 30),
+                          OpFormeCanoniqueCust(
+                              p: widget.probleme,
+                              title: "Primal: forme canonique"),
+                          const SizedBox(height: 30),
+                          OpFonctionObjectiveCust(
+                              p: p, title: "Dual: fonction objective"),
+                          const SizedBox(height: 30),
+                          OpFormeCanoniqueCust(
+                              p: p, title: "Dual: forme canonique"),
+                          const SizedBox(height: 30),
+                          const OpFormeStandard(),
+                          const SizedBox(height: 30),
+                          OpTableau(
+                              probleme: Probleme(
+                            forme: p.forme.copyWith(),
+                            type: p.type,
+                            name: p.name,
+                            variables: p.variables.map((e) => e).toList(),
+                          ))
+                        ]))
                 ],
               ),
             )));

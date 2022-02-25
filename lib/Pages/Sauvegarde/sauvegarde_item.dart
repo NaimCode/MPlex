@@ -22,14 +22,18 @@ class SauvegardeItem extends StatelessWidget {
             children: [
               Text(
                 "Fonction objective",
-                style: Get.theme.textTheme.caption,
+                style:
+                    Get.theme.textTheme.caption!.copyWith(color: Colors.black),
               ),
               const SizedBox(height: 3),
               p.getApercuFonctionObjective(),
               const SizedBox(height: 6),
+              const Divider(),
+              const SizedBox(height: 6),
               Text(
                 "Forme canonique",
-                style: Get.theme.textTheme.caption,
+                style:
+                    Get.theme.textTheme.caption!.copyWith(color: Colors.black),
               ),
               const SizedBox(height: 3),
               p.getApercuFormeCanonique()

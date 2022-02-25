@@ -46,7 +46,10 @@ class FormController {
         ),
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 5),
-          child: FaIcon(FontAwesomeIcons.equals, size: 10),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: FaIcon(FontAwesomeIcons.equals, size: 10),
+          ),
         ),
         ...problemeVariable.map((element) => element
             .getWidgetWithoutContainer(problemeVariable.indexOf(element) == 0))
@@ -80,7 +83,10 @@ class FormController {
                       scale: 0.6,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: e.getInegalityIcon(),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                          child: e.getInegalityIcon(),
+                        ),
                       ),
                     ),
                     Text(e.value.toInt().toString(),

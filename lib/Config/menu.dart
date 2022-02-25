@@ -45,7 +45,7 @@ class MenuItem {
                     overflow: TextOverflow.fade,
                     maxLines: 1,
                     style: Get.theme.textTheme.bodyText2!.copyWith(
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w800,
                         color: isCurrent
                             ? Colors.white
                             : Get.theme.textTheme.bodyText2!.color!
@@ -61,7 +61,7 @@ class MenuItem {
 
 class Menu {
   List<MenuItem> menu = [
-    MenuItem(title: "Accueil", route: "/home", icon: Icons.home),
+    //  MenuItem(title: "Accueil", route: "/home", icon: Icons.home),
     MenuItem(
         title: "Maximisation",
         route: "/maximisation",
@@ -86,14 +86,20 @@ class Menu {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Résolution", style: Get.textTheme.caption),
-            ...menu.getRange(0, 3).map((e) => e.getWidget()).toList(),
+            Text("Résolution",
+                style: Get.textTheme.caption!.copyWith(
+                    color: Colors.black, fontWeight: FontWeight.w700)),
+            ...menu.getRange(0, 2).map((e) => e.getWidget()).toList(),
             const Divider(),
-            Text("Outils", style: Get.textTheme.caption),
-            ...menu.getRange(3, 5).map((e) => e.getWidget()).toList(),
+            Text("Outils",
+                style: Get.textTheme.caption!.copyWith(
+                    color: Colors.black, fontWeight: FontWeight.w700)),
+            ...menu.getRange(2, 4).map((e) => e.getWidget()).toList(),
             const Divider(),
-            Text("Plus", style: Get.textTheme.caption),
-            ...menu.getRange(5, menu.length).map((e) => e.getWidget()).toList()
+            Text("Plus",
+                style: Get.textTheme.caption!.copyWith(
+                    color: Colors.black, fontWeight: FontWeight.w700)),
+            ...menu.getRange(4, menu.length).map((e) => e.getWidget()).toList()
           ],
         ),
       ),

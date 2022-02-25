@@ -17,9 +17,7 @@ class _SauvegardePageState extends State<SauvegardePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-      ),
+      backgroundColor: Colors.transparent,
       body: Padding(
         padding: const EdgeInsets.only(top: 13.0, right: 13, left: 13.0),
         child: ValueListenableBuilder(

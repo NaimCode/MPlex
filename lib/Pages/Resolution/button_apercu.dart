@@ -17,40 +17,42 @@ class ButtonApercu extends StatelessWidget {
           decoration: BoxDecoration(
               color: Get.theme.backgroundColor,
               borderRadius: BorderRadius.circular(5)),
-          child: ElevatedButton.icon(
-              label: Text(
-                "Aperçu",
-                style: Get.theme.textTheme.bodyText2,
-              ),
-              onPressed: () => Get.defaultDialog(
-                  titleStyle: Get.textTheme.subtitle2,
-                  title: "Aperçu",
-                  middleText: "",
-                  confirm: Padding(
-                    padding: const EdgeInsets.only(bottom: 60),
-                    child: Column(
-                      children: [
-                        Text(
-                          "Fonction objective:",
-                          style: Get.theme.textTheme.caption,
-                        ),
-                        const SizedBox(height: 3),
-                        _.getApercuFonctionObjective(),
-                        const SizedBox(height: 6),
-                        Text(
-                          "Forme canonique:",
-                          style: Get.theme.textTheme.caption,
-                        ),
-                        const SizedBox(height: 3),
-                        _.getApercuFormeCanonique()
-                      ],
-                    ),
+          child: ElevatedButton(
+            child: Text(
+              "Aperçu",
+              style: Get.theme.textTheme.bodyText2,
+            ),
+            onPressed: () => Get.defaultDialog(
+                titleStyle: Get.textTheme.subtitle2!
+                    .copyWith(fontSize: 20, fontWeight: FontWeight.w700),
+                title: "",
+                middleText: "",
+                confirm: Padding(
+                  padding: const EdgeInsets.only(bottom: 60),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Fonction objective",
+                        style: Get.theme.textTheme.caption!
+                            .copyWith(color: Colors.black),
+                      ),
+                      const SizedBox(height: 3),
+                      _.getApercuFonctionObjective(),
+                      const SizedBox(height: 10),
+                      const Divider(),
+                      const SizedBox(height: 10),
+                      Text(
+                        "Forme canonique:",
+                        style: Get.theme.textTheme.caption!
+                            .copyWith(color: Colors.black),
+                      ),
+                      const SizedBox(height: 3),
+                      _.getApercuFormeCanonique()
+                    ],
                   ),
-                  radius: 7),
-              icon: Icon(
-                Icons.visibility_outlined,
-                color: Get.theme.iconTheme.color,
-              ))),
+                ),
+                radius: 7),
+          )),
     );
   }
 }

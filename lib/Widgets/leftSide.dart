@@ -38,8 +38,8 @@ class _LeftSideState extends State<LeftSide> {
                     Logo(),
                     const Divider(),
                     Menu().getWidget(),
-                    const Divider(),
-                    DarkModeButton()
+                    // const Divider(),
+                    // DarkModeButton()
                   ],
                 ),
               ),
