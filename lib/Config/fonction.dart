@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mplex/Model/Class/probleme.dart';
+import 'package:mplex/Model/enum.dart';
 import 'package:mplex/Pages/Optimisation/index.dart';
 import 'package:mplex/Pages/Resolution/controller.dart';
 

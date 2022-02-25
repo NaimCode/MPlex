@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mplex/Model/Class/probleme.dart';
+import 'package:mplex/Model/enum.dart';
 import 'package:mplex/Pages/Optimisation/op_form_canonique.dart';
 import 'package:mplex/Pages/Optimisation/op_form_standard.dart';
 import 'package:mplex/Pages/Optimisation/op_tableau.dart';
@@ -20,8 +21,13 @@ class Optimisation extends StatefulWidget {
 
 class _OptimisationState extends State<Optimisation> {
   ScrollController scrollController = ScrollController();
+  late Probleme p;
+
   @override
   void initState() {
+    p = widget.probleme.type == ProblemeType.MAX
+        ? widget.probleme
+        : widget.probleme.toDual();
     // TODO: implement initState
     super.initState();
   }
@@ -30,11 +36,7 @@ class _OptimisationState extends State<Optimisation> {
   Widget build(BuildContext context) {
     ScrollController scrollController = ScrollController();
     return Provider<Probleme>(
-        create: (context) => Probleme(
-            forme: widget.probleme.forme.copyWith(),
-            type: widget.probleme.type,
-            name: widget.probleme.name,
-            variables: widget.probleme.variables.map((e) => e).toList()),
+        create: (context) => p,
         child: NestedScrollView(
             controller: scrollController,
             headerSliverBuilder: (BuildContext context,
@@ -97,11 +99,14 @@ class _OptimisationState extends State<Optimisation> {
                                           ),
                                           onPressed: () {
                                             if (exist) {
-                                              b.clear();
-                                              b.addAll(problemes.where(
-                                                  (element) =>
-                                                      element !=
-                                                      widget.probleme));
+                                              b.deleteAt(b.values
+                                                  .toList()
+                                                  .indexOf(widget.probleme));
+                                              // b.clear();
+                                              // b.addAll(problemes.where(
+                                              //     (element) =>
+                                              //         element !=
+                                              //         widget.probleme));
                                             } else {
                                               b.add(widget.probleme);
                                             }

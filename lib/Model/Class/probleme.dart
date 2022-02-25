@@ -39,7 +39,6 @@ class Probleme {
   });
 
   Probleme toDual() {
-    var temp;
     List<Variable> dualVariables = [];
     for (int i = 0; i < forme.contraintes.length; i++) {
       dualVariables.add(Variable(
@@ -56,10 +55,13 @@ class Probleme {
             value: forme.contraintes[j].variables[i].value,
             variableType: VariableType.DECISION));
       }
-      dualContraintes.add(Contrainte(
-          variables: tempVariable,
-          inegalite: Inegalite.INF_EGAL,
-          value: variables[i].value));
+      if (tempVariable.every((element) => element.value == 0)) {
+      } else {
+        dualContraintes.add(Contrainte(
+            variables: tempVariable,
+            inegalite: Inegalite.INF_EGAL,
+            value: variables[i].value));
+      }
     }
     return Probleme(
         forme: Forme(type: FormeType.CANONIQUE, contraintes: dualContraintes),
