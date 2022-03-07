@@ -3,20 +3,15 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mplex/Config/theme.dart';
-import 'package:mplex/Data/test.dart';
 import 'package:mplex/Model/Class/contrainte.dart';
 import 'package:mplex/Model/Class/forme.dart';
 import 'package:mplex/Model/Class/probleme.dart';
 import 'package:mplex/Model/enum.dart';
-import 'package:mplex/Model/constante.dart';
 import 'package:mplex/Pages/Resolution/index.dart';
 import 'package:mplex/Pages/Sauvegarde/index.dart';
 import 'package:mplex/page.dart';
-import 'package:bitsdojo_window/bitsdojo_window.dart';
-import 'Model/Class/variable.dart';
 import 'Model/Class/variable.dart';
 import 'Pages/home.dart';
 
@@ -48,12 +43,6 @@ void main() async {
   }
 
   runApp(MPlex());
-//   doWhenWindowReady(() {
-//     final win = appWindow;
-
-//     win.title = "Custom window with Flutter";
-//     win.show();
-//   });
 }
 
 class MPlex extends StatelessWidget {

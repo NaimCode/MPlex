@@ -54,9 +54,8 @@ class Algorithme {
   }
 
   Tableau resolution({required Tableau tableau}) {
-    Constante.log.i(tableau.variables);
-
     int variableEntrante = tableau.getVariableEntrante();
+    print(variableEntrante);
     List<Variable> colonne =
         tableau.getColonnePivot(variableEntrante: variableEntrante);
     int pivot = tableau.getPivot(colonne: colonne);
@@ -75,9 +74,7 @@ class Algorithme {
 
   SolutionType verification(
       {required Tableau tableau, required ProblemeType type}) {
-    if (type == ProblemeType.MAX
-        ? tableau.cj_zj.every((element) => element <= 0)
-        : tableau.cj_zj.every((element) => element >= 0))
+    if (tableau.cj_zj.every((element) => element <= 0))
       return SolutionType.FINAL;
     else {
       if (tableau.numero >= 20) {

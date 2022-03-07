@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:mplex/Model/Class/variable.dart';
 import 'package:mplex/Model/enum.dart';
+
 part 'contrainte.g.dart';
 
 @HiveType(typeId: 4)
@@ -110,4 +111,7 @@ class Contrainte {
       value: value ?? this.value,
     );
   }
+
+  @override
+  String toString() => 'Contrainte(variables: $variables, inegalite: $inegalite, value: $value)';
 }

@@ -47,15 +47,14 @@ class Tableau {
   }
 
   int getVariableEntrante() {
-    return this.cj_zj.indexOf(
-        this.cj_zj.reduce(problemeType == ProblemeType.MAX ? max : min));
+    return this.cj_zj.indexOf(this.cj_zj.reduce(max));
   }
 
   List<Variable> getColonnePivot({required int variableEntrante}) {
     return this
         .variables
         .map((e) =>
-            e.where((element) => e.indexOf(element) == variableEntrante).first)
+            e.singleWhere((element) => e.indexOf(element) == variableEntrante))
         .toList();
   }
 

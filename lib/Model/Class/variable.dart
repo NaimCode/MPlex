@@ -91,7 +91,11 @@ class Variable {
   }
 
   String removeDecimalZeroFormat() {
-    return value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 1);
+    return value.toString().length > 7
+        ? value < 0
+            ? "-M"
+            : "M"
+        : value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 1);
   }
 
   Widget getNameWidget() {

@@ -187,17 +187,19 @@ class ButtonAddContrainte extends StatelessWidget {
                                       onChanged: (var value) {
                                         inegalite.value = value!;
                                       },
-                                      items: [
-                                        _.problemeTypeController.value ==
-                                                ProblemeType.MAX
-                                            ? const DropdownMenuItem(
-                                                value: Inegalite.INF_EGAL,
-                                                child: FaIcon(FontAwesomeIcons
-                                                    .lessThanEqual))
-                                            : const DropdownMenuItem(
-                                                value: Inegalite.SUP_EGAL,
-                                                child: FaIcon(FontAwesomeIcons
-                                                    .greaterThanEqual)),
+                                      items: const [
+                                        DropdownMenuItem(
+                                            value: Inegalite.INF_EGAL,
+                                            child: FaIcon(FontAwesomeIcons
+                                                .lessThanEqual)),
+                                        DropdownMenuItem(
+                                            value: Inegalite.SUP_EGAL,
+                                            child: FaIcon(FontAwesomeIcons
+                                                .greaterThanEqual)),
+                                        DropdownMenuItem(
+                                            value: Inegalite.EGAL,
+                                            child: FaIcon(
+                                                FontAwesomeIcons.equals)),
                                       ]),
                                 ),
                                 const SizedBox(

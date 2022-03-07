@@ -74,42 +74,50 @@ class Probleme {
     try {
       if (forme.type != FormeType.STANDARD) {
         Probleme probleme = this;
-        if (type == ProblemeType.MAX) {
-          for (int i = 0; i < probleme.forme.contraintes.length; i++) {
-            //Changement des inegalité des contraintes
-            probleme.forme.contraintes[i].inegalite = Inegalite.EGAL;
-            probleme.forme.contraintes[i].variables.add(Variable(
-                name: "$nameVariableEcart${i + 1}",
-                value: 1, //eValue,
-                variableType: VariableType.ECART));
+        List<Variable> l = [];
+        for (int i = 0; i < probleme.forme.contraintes.length; i++) {
+          //Changement des inegalité des contraintes
+          double val = 1;
+          switch (probleme.forme.contraintes[i].inegalite) {
+            case Inegalite.INF_EGAL:
+              val = 1;
+              break;
+            case Inegalite.SUP_EGAL:
+              val = -1;
+              break;
+            case Inegalite.EGAL:
+              val = 0;
+              break;
+            default:
+              val = 1;
           }
-        } else {
-          for (int i = 0; i < probleme.forme.contraintes.length; i++) {
-            probleme.forme.contraintes[i].inegalite = Inegalite.EGAL;
-            probleme.forme.contraintes[i].variables.add(Variable(
+          probleme.forme.contraintes[i].inegalite = Inegalite.EGAL;
+          if (val != 0) {
+            Variable v = Variable(
                 name: "$nameVariableEcart${i + 1}",
-                value: -1, //eValue,
-                variableType: VariableType.ECART));
-
-            probleme.forme.contraintes[i].variables.add(Variable(
+                value: val, //eValue,
+                variableType: VariableType.ECART);
+            l.add(v);
+            probleme.forme.contraintes[i].variables.add(v);
+          }
+          if (val != 1) {
+            Variable v = Variable(
                 name: "$nameVariableArtificiel${i + 1}",
                 value: 1, //eValue,
-                variableType: VariableType.ARTIFICIELLE));
-
-            probleme.variables.add(Variable(
-                name: "$nameVariableEcart${i + 1}",
-                value: 0, //eValue,
-                variableType: VariableType.ECART));
-          }
-          for (int i = 0; i < probleme.forme.contraintes.length; i++) {
-            probleme.variables.add(Variable(
-                name: "$nameVariableArtificiel${i + 1}",
-                value: 1 / 0, //eValue,
-                variableType: VariableType.ARTIFICIELLE));
+                variableType: VariableType.ARTIFICIELLE);
+            l.add(v);
+            probleme.forme.contraintes[i].variables.add(v);
           }
         }
-      } else {
-        throw Exception(Exceptions.DEJA_STANDARD);
+        List<Variable> tempX = l
+            .where((element) => element.variableType == VariableType.ECART)
+            .toList();
+        List<Variable> tempY = l
+            .where(
+                (element) => element.variableType == VariableType.ARTIFICIELLE)
+            .toList();
+        probleme.variables.addAll(tempX.map((e) => e.copyWith(value: 0)));
+        probleme.variables.addAll(tempY.map((e) => e.copyWith(value: M)));
       }
     } catch (e) {
       print(e);
@@ -118,101 +126,48 @@ class Probleme {
   }
 
   Tableau toTableau() {
-    if (type == ProblemeType.MAX) {
-      Tableau? tableau;
-      Probleme probleme = toStandart();
-      probleme.forme.contraintes.map((e) => e.variables.last.value).toList();
-      List<double> cj = probleme.variables.map((e) => e.value).toList();
-      cj.addAll(List.filled(probleme.forme.contraintes.length, 0));
-      List<double> zj = List.filled(cj.length, 0);
+    Tableau? tableau;
+    Probleme probleme = toStandart();
+//
+    List<double> cj = probleme.variables.map((e) => e.value).toList();
+    List<double> zj = List.filled(cj.length, 0);
+    List<double> cj_zj = cj.map((e) => e).toList();
+//
 
-      List<double> cj_zj = cj.map((e) => e).toList();
-      List<Variable> vdb = probleme.forme.contraintes
-          .map((e) => Variable(
-              name: e.variables.last.name,
-              value: 0,
-              variableType: e.variables.last.variableType))
-          .toList();
-      List<double> st = probleme.forme.contraintes.map((e) => e.value).toList();
-      List<Variable> ecart =
-          probleme.forme.contraintes.map((e) => e.variables.last).toList();
-
-      List<List<Variable>> matrice =
-          probleme.forme.contraintes.map((e) => e.variables).toList();
-      for (int i = 0; i < matrice.length; i++) {
-        matrice[i].removeLast();
-        for (int j = 0; j < ecart.length; j++) {
-          if (j == i) {
-            matrice[i].add(ecart[j]);
-          } else {
-            matrice[i].add(Variable(
-                name: ecart[j].name,
-                value: 0,
-                variableType: VariableType.ECART));
-          }
+    List<Variable> vdb = probleme.variables
+        .getRange(probleme.variables.length - probleme.forme.contraintes.length,
+            probleme.variables.length)
+        .toList();
+//
+    List<double> st = probleme.forme.contraintes.map((e) => e.value).toList();
+    List<List<Variable>> matrice = [];
+    Constante.log.i(probleme.variables);
+    for (int i = 0; i < probleme.forme.contraintes.length; i++) {
+      Constante.log.v(probleme.forme.contraintes[i].variables);
+      List<Variable> temp = [];
+      for (int j = 0; j < probleme.variables.length; j++) {
+        if (probleme.forme.contraintes[i].variables
+            .any((element) => element.name == probleme.variables[j].name))
+          temp.add(probleme.forme.contraintes[i].variables.firstWhere(
+              (element) => element.name == probleme.variables[j].name));
+        else {
+          temp.add(probleme.variables[j].copyWith(value: 0));
         }
       }
-      tableau = Tableau(
-          numero: 1,
-          cj: cj,
-          zj: zj,
-          cj_zj: cj_zj,
-          vdb: vdb,
-          st: st,
-          variables: matrice,
-          problemeType: type);
-
-      return tableau;
-    } else {
-      Tableau? tableau;
-      Probleme probleme = toStandart();
-
-      List<double> cj = probleme.variables.map((e) => e.value).toList();
-
-      List<double> cj_zj = cj.map((e) => e).toList();
-      List<Variable> vdb = probleme.forme.contraintes
-          .map((e) => e.variables.last.copyWith(
-              value: probleme.variables
-                  .singleWhere(
-                      (element) => e.variables.last.name == element.name)
-                  .value))
-          .toList();
-      List<double> st = probleme.forme.contraintes.map((e) => e.value).toList();
-
-      List<List<Variable>> matrice = [];
-      for (int j = 0; j < probleme.forme.contraintes.length; j++) {
-        List<Variable> temp = [];
-        for (int i = 0; i < probleme.variables.length; i++) {
-          temp.add(probleme.forme.contraintes[j].variables
-                  .any((e) => e.name == probleme.variables[i].name)
-              ? probleme.forme.contraintes[j].variables.singleWhere(
-                  (element) => element.name == probleme.variables[i].name)
-              : probleme.variables[i].copyWith(value: 0));
-        }
-        matrice.add(temp);
-      }
-      List<double> zj = List.filled(cj.length, 0);
-      for (int i = 0; i < zj.length; i++) {
-        double temp = 0;
-        for (int j = 0; j < matrice.length; j++) {
-          temp += vdb[j].value * matrice[j][i].value;
-        }
-
-        zj[i] = temp;
-      }
-
-      tableau = Tableau(
-          numero: 1,
-          cj: cj,
-          zj: zj,
-          cj_zj: cj_zj,
-          vdb: vdb,
-          st: st,
-          variables: matrice,
-          problemeType: type);
-
-      return tableau;
+      matrice.add(temp);
     }
+
+    tableau = Tableau(
+        numero: 1,
+        cj: cj,
+        zj: zj,
+        cj_zj: cj_zj,
+        vdb: vdb,
+        st: st,
+        variables: matrice,
+        problemeType: type);
+
+    return tableau;
   }
 
   Widget getApercuFonctionObjective() {

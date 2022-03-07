@@ -20,6 +20,10 @@ class Fonction {
   }
 
   static String removeDecimalZeroFormat(double n) {
-    return n.toStringAsFixed(n.truncateToDouble() == n ? 0 : 1);
+    return n.toString().length > 7
+        ? n < 0
+            ? "-M"
+            : "M"
+        : n.toStringAsFixed(n.truncateToDouble() == n ? 0 : 1);
   }
 }
