@@ -55,10 +55,12 @@ class Algorithme {
 
   Tableau resolution({required Tableau tableau}) {
     int variableEntrante = tableau.getVariableEntrante();
-    print(variableEntrante);
+
     List<Variable> colonne =
         tableau.getColonnePivot(variableEntrante: variableEntrante);
+
     int pivot = tableau.getPivot(colonne: colonne);
+
     // Constante.log.d("pivot : $pivot , v : $variableEntrante");
     tableau
       ..updateVDB(pivot: pivot, variableEntrante: variableEntrante)
@@ -77,7 +79,7 @@ class Algorithme {
     if (tableau.cj_zj.every((element) => element <= 0))
       return SolutionType.FINAL;
     else {
-      if (tableau.numero >= 20) {
+      if (tableau.numero >= 4) {
         return SolutionType.IMPOSSIBLE;
       } else
         return SolutionType.OPTIMAL;

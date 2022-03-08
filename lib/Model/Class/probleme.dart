@@ -117,7 +117,8 @@ class Probleme {
                 (element) => element.variableType == VariableType.ARTIFICIELLE)
             .toList();
         probleme.variables.addAll(tempX.map((e) => e.copyWith(value: 0)));
-        probleme.variables.addAll(tempY.map((e) => e.copyWith(value: M)));
+        probleme.variables.addAll(tempY.map(
+            (e) => e.copyWith(value: type == ProblemeType.MIN ? M : (-1 * M))));
       }
     } catch (e) {
       print(e);
@@ -134,16 +135,21 @@ class Probleme {
     List<double> cj_zj = cj.map((e) => e).toList();
 //
 
-    List<Variable> vdb = probleme.variables
-        .getRange(probleme.variables.length - probleme.forme.contraintes.length,
-            probleme.variables.length)
+    // List<Variable> vdb = probleme.variables
+    //     .getRange(probleme.variables.length - probleme.forme.contraintes.length,
+    //         probleme.variables.length)
+    //     .toList();
+    List<Variable> vdb = probleme.forme.contraintes
+        .map((e) => e.variables.last.copyWith(
+            value: probleme.variables
+                .singleWhere((element) => element.name == e.variables.last.name)
+                .value))
         .toList();
+
 //
     List<double> st = probleme.forme.contraintes.map((e) => e.value).toList();
     List<List<Variable>> matrice = [];
-    Constante.log.i(probleme.variables);
     for (int i = 0; i < probleme.forme.contraintes.length; i++) {
-      Constante.log.v(probleme.forme.contraintes[i].variables);
       List<Variable> temp = [];
       for (int j = 0; j < probleme.variables.length; j++) {
         if (probleme.forme.contraintes[i].variables
@@ -165,7 +171,9 @@ class Probleme {
         vdb: vdb,
         st: st,
         variables: matrice,
-        problemeType: type);
+        problemeType: type)
+      ..updateZj()
+      ..updateCjZj();
 
     return tableau;
   }

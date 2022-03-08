@@ -20,7 +20,7 @@ class Fonction {
   }
 
   static String removeDecimalZeroFormat(double n) {
-    return n.toString().length > 7
+    return n.ceil().toString().length > 7
         ? n < 0
             ? "-M"
             : "M"

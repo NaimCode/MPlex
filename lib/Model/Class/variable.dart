@@ -91,7 +91,7 @@ class Variable {
   }
 
   String removeDecimalZeroFormat() {
-    return value.toString().length > 7
+    return value.ceil().toString().length > 7
         ? value < 0
             ? "-M"
             : "M"

@@ -47,7 +47,8 @@ class Tableau {
   }
 
   int getVariableEntrante() {
-    return this.cj_zj.indexOf(this.cj_zj.reduce(max));
+    return this.cj_zj.indexOf(
+        this.cj_zj.reduce(problemeType == ProblemeType.MAX ? max : min));
   }
 
   List<Variable> getColonnePivot({required int variableEntrante}) {
@@ -62,7 +63,9 @@ class Tableau {
     List<Map<int, double>> rapport = [];
 
     for (int i = 0; i < colonne.length; i++) {
-      rapport.add({i: st[i] / colonne[i].value});
+      if (colonne[i].value > 0) {
+        rapport.add({i: st[i] / colonne[i].value});
+      }
     }
     // Constante.log.v(temp);
     // temp.skipWhile((value) => value <= 0);
@@ -96,8 +99,10 @@ class Tableau {
 
     for (int i = 0; i < variables[pivot].length; i++) {
       variables[pivot][i].value *= x;
-      st[pivot] *= x;
+      print("${i} " + variables[pivot][i].value.toString());
     }
+    st[pivot] *= x;
+
     for (int i = 0; i < variables.length; i++) {
       if (i != pivot) {
         double y = variables[i][variableEntrante].value /

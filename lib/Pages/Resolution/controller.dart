@@ -17,13 +17,26 @@ class FormController {
     this.problemeTypeController.value = problemeTypeController;
   }
   Probleme toProbleme() {
+    List<Contrainte> l =
+        problemeContrainte.map((element) => element.copyWith()).toList().cast();
+    for (int i = 0; i < l.length; i++) {
+      if (l[i].value < 0) {
+        List<Variable> temp = l[i]
+            .variables
+            .map((e) => e.copyWith(value: e.value * (-1)))
+            .toList()
+            .cast();
+        l[i].value = l[i].value * (-1);
+        l[i].inegalite = l[i].inegalite == Inegalite.INF_EGAL
+            ? Inegalite.SUP_EGAL
+            : l[i].inegalite == Inegalite.SUP_EGAL
+                ? Inegalite.INF_EGAL
+                : Inegalite.EGAL;
+        l[i].variables = temp;
+      }
+    }
     return Probleme(
-        forme: Forme(
-            type: FormeType.CANONIQUE,
-            contraintes: problemeContrainte
-                .map((element) => element.copyWith())
-                .toList()
-                .cast()),
+        forme: Forme(type: FormeType.CANONIQUE, contraintes: l),
         type: problemeTypeController.value,
         name: "Z",
         variables: problemeVariable.map((element) => element).toList().cast());

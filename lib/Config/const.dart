@@ -1,2 +1,4 @@
+import 'dart:math';
+
 String dualVariableName = "y";
-double M = 1000000000;
+double M = pow(10, 10).toDouble();
