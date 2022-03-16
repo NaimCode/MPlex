@@ -42,7 +42,6 @@ class _OptimisationState extends State<Optimisation> {
                 [
                   SliverAppBar(
                     floating: true,
-                    snap: true,
                     automaticallyImplyLeading: false,
                     centerTitle: false,
                     title: Padding(

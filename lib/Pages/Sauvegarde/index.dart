@@ -26,7 +26,7 @@ class _SauvegardePageState extends State<SauvegardePage> {
                 controller: ScrollController(),
                 itemCount: b.length,
                 itemBuilder: (context, index) =>
-                    SauvegardeItem(p: b.getAt(index)))),
+                    SauvegardeItem(p: b.getAt(b.length - 1 - index)))),
       ),
     );
   }

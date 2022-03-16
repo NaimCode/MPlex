@@ -122,7 +122,6 @@ class Tableau {
   }
 
   void updateZj() {
-    // print("avant zj $zj");
     for (int i = 0; i < zj.length; i++) {
       double temp = 0;
       for (int j = 0; j < variables.length; j++) {
@@ -131,7 +130,6 @@ class Tableau {
 
       zj[i] = temp;
     }
-    //print("apres zj $zj");
   }
 
   void updateCjZj() {
