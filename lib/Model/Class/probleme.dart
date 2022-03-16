@@ -215,29 +215,51 @@ class Probleme {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisSize: MainAxisSize.min,
-        children: cons
-            .map((e) => Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ...e.variables.map((element) =>
-                        element.getWidgetWithoutContainer(
-                            e.variables.indexOf(element) == 0)),
-                    Transform.scale(
-                      scale: 0.6,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: e.getInegalityIcon(),
-                      ),
-                    ),
-                    Text(e.value.toInt().toString(),
-                        style: Get.textTheme.bodyText2!.copyWith(fontSize: 17))
-                  ],
-                ))
-            .toList(),
-      ),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ...cons
+                .map((e) => Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ...e.variables.map((element) =>
+                            element.getWidgetWithoutContainer(
+                                e.variables.indexOf(element) == 0)),
+                        Transform.scale(
+                          scale: 0.6,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: e.getInegalityIcon(),
+                          ),
+                        ),
+                        Text(e.value.toInt().toString(),
+                            style:
+                                Get.textTheme.bodyText2!.copyWith(fontSize: 17))
+                      ],
+                    ))
+                .toList(),
+            const Divider(),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ...variables
+                    .map((e) => e.getNameWidget2(isLast: variables.last == e))
+                    .toList(),
+                Transform.scale(
+                    scale: 0.6,
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 5, right: 5, top: 7),
+                      child: FaIcon(FontAwesomeIcons.greaterThanEqual),
+                    )),
+                Padding(
+                  padding: const EdgeInsets.only(top: 3),
+                  child: Text(0.toString(),
+                      style: Get.textTheme.bodyText2!.copyWith(fontSize: 17)),
+                )
+              ],
+            )
+          ]),
     );
   }
 
@@ -279,28 +301,51 @@ class Probleme {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 0),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: cons
-            .map((e) => Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ...e.variables.map((element) =>
-                        element.getWidgetWithoutContainer(
-                            e.variables.indexOf(element) == 0)),
-                    Transform.scale(
-                      scale: 0.6,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: e.getInegalityIcon(),
-                      ),
-                    ),
-                    Text(e.value.toInt().toString(),
-                        style: Get.textTheme.bodyText2!.copyWith(fontSize: 17))
-                  ],
-                ))
-            .toList(),
-      ),
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ...cons
+                .map((e) => Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ...e.variables.map((element) =>
+                            element.getWidgetWithoutContainer(
+                                e.variables.indexOf(element) == 0)),
+                        Transform.scale(
+                          scale: 0.6,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: e.getInegalityIcon(),
+                          ),
+                        ),
+                        Text(e.value.toInt().toString(),
+                            style:
+                                Get.textTheme.bodyText2!.copyWith(fontSize: 17))
+                      ],
+                    ))
+                .toList(),
+            const Divider(),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ...variables
+                    .map((e) => e.getNameWidget2(isLast: variables.last == e))
+                    .toList(),
+                Transform.scale(
+                    scale: 0.6,
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 5, right: 5, top: 7),
+                      child: FaIcon(FontAwesomeIcons.greaterThanEqual),
+                    )),
+                Padding(
+                  padding: const EdgeInsets.only(top: 3),
+                  child: Text(0.toString(),
+                      style: Get.textTheme.bodyText2!.copyWith(fontSize: 17)),
+                )
+              ],
+            )
+          ]),
     );
   }
 

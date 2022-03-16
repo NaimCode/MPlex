@@ -59,14 +59,18 @@ class Algorithme {
     List<Variable> colonne =
         tableau.getColonnePivot(variableEntrante: variableEntrante);
 
-    int pivot = tableau.getPivot(colonne: colonne);
+    int? pivot = tableau.getPivot(colonne: colonne);
 
     // Constante.log.d("pivot : $pivot , v : $variableEntrante");
-    tableau
-      ..updateVDB(pivot: pivot, variableEntrante: variableEntrante)
-      ..updateVariablesAndST(pivot: pivot, variableEntrante: variableEntrante)
-      ..updateZj()
-      ..updateCjZj();
+    if (pivot != null) {
+      tableau
+        ..updateVDB(pivot: pivot, variableEntrante: variableEntrante)
+        ..updateVariablesAndST(pivot: pivot, variableEntrante: variableEntrante)
+        ..updateZj()
+        ..updateCjZj();
+    } else {
+      tableau.copyWith(isBorne: false);
+    }
 
     // return resolution(
     //     tableau: tableau.copyWith(numero: tableau.numero + 1));
@@ -79,7 +83,8 @@ class Algorithme {
     if (tableau.cj_zj.every((element) => element <= 0))
       return SolutionType.FINAL;
     else {
-      if (tableau.numero >= 4) {
+      bool isBorne = tableau.isBorne == null ? true : tableau.isBorne!;
+      if (tableau.numero >= 20 || !isBorne) {
         return SolutionType.IMPOSSIBLE;
       } else
         return SolutionType.OPTIMAL;

@@ -9,6 +9,7 @@ import 'package:mplex/Model/enum.dart';
 
 class Tableau {
   int numero;
+  bool? isBorne = true;
   final List<double> cj;
   List<double> zj;
   List<double> cj_zj;
@@ -16,16 +17,16 @@ class Tableau {
   List<double> st;
   List<List<Variable>> variables;
   ProblemeType problemeType;
-  Tableau({
-    required this.numero,
-    required this.cj,
-    required this.zj,
-    required this.cj_zj,
-    required this.vdb,
-    required this.st,
-    required this.variables,
-    required this.problemeType,
-  });
+  Tableau(
+      {required this.numero,
+      required this.cj,
+      required this.zj,
+      required this.cj_zj,
+      required this.vdb,
+      required this.st,
+      required this.variables,
+      required this.problemeType,
+      this.isBorne});
 
   Solution toSolution() {
     double val = 0;
@@ -59,28 +60,33 @@ class Tableau {
         .toList();
   }
 
-  int getPivot({required List<Variable> colonne}) {
-    List<Map<int, double>> rapport = [];
+  int? getPivot({required List<Variable> colonne}) {
+    try {
+      List<Map<int, double>> rapport = [];
 
-    for (int i = 0; i < colonne.length; i++) {
-      if (colonne[i].value > 0) {
-        rapport.add({i: st[i] / colonne[i].value});
+      for (int i = 0; i < colonne.length; i++) {
+        if (colonne[i].value > 0) {
+          rapport.add({i: st[i] / colonne[i].value});
+        }
       }
-    }
-    // Constante.log.v(temp);
-    // temp.skipWhile((value) => value <= 0);
-    // Constante.log.v(temp);
-    for (int i = 0; i < rapport.length; i++) {
-      if (rapport[i].values.first <= 0) {
-        rapport.removeAt(i);
+      // Constante.log.v(temp);
+      // temp.skipWhile((value) => value <= 0);
+      // Constante.log.v(temp);
+      for (int i = 0; i < rapport.length; i++) {
+        if (rapport[i].values.first <= 0) {
+          rapport.removeAt(i);
+        }
       }
+      Map<int, double> index = rapport.first;
+      for (int i = 0; i < rapport.length; i++) {
+        index =
+            index.values.first >= rapport[i].values.first ? rapport[i] : index;
+      }
+      return index.keys.first;
+    } catch (e) {
+      Constante.log.w(e);
+      return null;
     }
-    Map<int, double> index = rapport.first;
-    for (int i = 0; i < rapport.length; i++) {
-      index =
-          index.values.first >= rapport[i].values.first ? rapport[i] : index;
-    }
-    return index.keys.first;
   }
 
   void updateVDB({required int pivot, required int variableEntrante}) {
@@ -144,6 +150,7 @@ class Tableau {
     List<double>? cj_zj,
     List<Variable>? vdb,
     List<double>? st,
+    bool? isBorne,
     List<List<Variable>>? variables,
     ProblemeType? problemeType,
   }) {
@@ -151,6 +158,7 @@ class Tableau {
       numero: numero ?? this.numero,
       cj: cj ?? this.cj,
       zj: zj ?? this.zj,
+      isBorne: isBorne ?? this.isBorne,
       cj_zj: cj_zj ?? this.cj_zj,
       vdb: vdb ?? this.vdb,
       st: st ?? this.st,

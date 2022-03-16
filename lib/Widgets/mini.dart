@@ -8,7 +8,7 @@ class CardForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: Get.theme.backgroundColor,
