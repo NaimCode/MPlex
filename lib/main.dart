@@ -78,29 +78,11 @@ class MPlex extends StatelessWidget {
                       )),
               GetPage(
                   preventDuplicates: true,
-                  // transitionDuration: const Duration(milliseconds: 700),
-                  //  transition: Transition.fade,
-                  name: "/minimisation",
-                  page: () => const Root(
-                        rightSide: Resolution(
-                          type: ProblemeType.MIN,
-                        ),
-                      )),
-              GetPage(
-                  preventDuplicates: true,
                   //  transitionDuration: const Duration(milliseconds: 700),
                   // transition: Transition.fade,
                   name: "/sauvegarde",
                   page: () => const Root(
                         rightSide: SauvegardePage(),
-                      )),
-              GetPage(
-                  preventDuplicates: true,
-                  // transitionDuration: const Duration(milliseconds: 400),
-                  // transition: Transition.fade,
-                  name: "/historique",
-                  page: () => Root(
-                        rightSide: Home(),
                       )),
               GetPage(
                   preventDuplicates: true,

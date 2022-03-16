@@ -33,7 +33,8 @@ class Algorithme {
         problemeType: tab.problemeType);
     while (verification(tableau: tab, type: probleme.type) ==
         SolutionType.OPTIMAL) {
-      tab = resolution(tableau: tab.copyWith(numero: tab.numero + 1));
+      tab = resolution(
+          tableau: tab.copyWith(numero: tab.numero + 1), type: probleme.type);
       yield Tableau(
           numero: tab.numero,
           cj: tab.cj.map((e) => e).toList(),
@@ -53,7 +54,7 @@ class Algorithme {
     }
   }
 
-  Tableau resolution({required Tableau tableau}) {
+  Tableau resolution({required Tableau tableau, required ProblemeType type}) {
     int variableEntrante = tableau.getVariableEntrante();
 
     List<Variable> colonne =
@@ -80,9 +81,11 @@ class Algorithme {
 
   SolutionType verification(
       {required Tableau tableau, required ProblemeType type}) {
-    if (tableau.cj_zj.every((element) => element <= 0))
+    if (type == ProblemeType.MAX
+        ? tableau.cj_zj.every((element) => element <= 0)
+        : tableau.cj_zj.every((element) => element >= 0)) {
       return SolutionType.FINAL;
-    else {
+    } else {
       bool isBorne = tableau.isBorne == null ? true : tableau.isBorne!;
       if (tableau.numero >= 20 || !isBorne) {
         return SolutionType.IMPOSSIBLE;

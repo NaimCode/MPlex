@@ -41,7 +41,8 @@ Probleme problemeTest = Probleme(
 
 resoudreTest(Probleme probleme) {
   var algorithme = Algorithme();
-  Tableau tableau = algorithme.resolution(tableau: probleme.toTableau());
+  Tableau tableau = algorithme.resolution(
+      tableau: probleme.toTableau(), type: ProblemeType.MAX);
   double sol = 0;
   Constante.log.v(tableau);
   for (int i = 0; i < tableau.vdb.length; i++) {

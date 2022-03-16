@@ -105,7 +105,6 @@ class Tableau {
 
     for (int i = 0; i < variables[pivot].length; i++) {
       variables[pivot][i].value *= x;
-      print("${i} " + variables[pivot][i].value.toString());
     }
     st[pivot] *= x;
 

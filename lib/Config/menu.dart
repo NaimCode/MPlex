@@ -63,21 +63,15 @@ class Menu {
   List<MenuItem> menu = [
     //  MenuItem(title: "Accueil", route: "/home", icon: Icons.home),
     MenuItem(
-        title: "Maximisation",
+        title: "Résolution",
         route: "/maximisation",
-        icon: FontAwesomeIcons.lessThanEqual),
-    MenuItem(
-        title: "Minimisation",
-        route: "/minimisation",
-        icon: FontAwesomeIcons.greaterThanEqual),
+        icon: FontAwesomeIcons.subscript),
+
     MenuItem(
         title: "Sauvegarde",
         route: "/sauvegarde",
         icon: Icons.bookmark_outlined),
-    MenuItem(
-        title: "Historique",
-        route: "/historique",
-        icon: FontAwesomeIcons.history),
+
     MenuItem(title: "Aide", route: "/aide", icon: Icons.help_rounded),
   ];
   Widget getWidget() {
@@ -86,20 +80,7 @@ class Menu {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Résolution",
-                style: Get.textTheme.caption!.copyWith(
-                    color: Colors.black, fontWeight: FontWeight.w700)),
-            ...menu.getRange(0, 2).map((e) => e.getWidget()).toList(),
-            const Divider(),
-            Text("Outils",
-                style: Get.textTheme.caption!.copyWith(
-                    color: Colors.black, fontWeight: FontWeight.w700)),
-            ...menu.getRange(2, 4).map((e) => e.getWidget()).toList(),
-            const Divider(),
-            Text("Plus",
-                style: Get.textTheme.caption!.copyWith(
-                    color: Colors.black, fontWeight: FontWeight.w700)),
-            ...menu.getRange(4, menu.length).map((e) => e.getWidget()).toList()
+            ...menu.map((e) => e.getWidget()).toList(),
           ],
         ),
       ),

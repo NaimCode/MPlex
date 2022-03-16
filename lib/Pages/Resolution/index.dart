@@ -71,6 +71,8 @@ class _ResolutionState extends State<Resolution> {
                     ),
                   ),
                   const SizedBox(height: 30),
+                  const FormProblemeType(),
+                  const SizedBox(height: 30),
                   const FormVariables(),
                   const SizedBox(height: 30),
                   const FormContraintes(),
