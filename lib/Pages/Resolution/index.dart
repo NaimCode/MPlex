@@ -65,7 +65,7 @@ class _ResolutionState extends State<Resolution> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    "Completez le formulaire suivant afin de lancer la ${widget.type == ProblemeType.MAX ? "maximisation" : "minimisation"}",
+                    "Completez le formulaire suivant afin de lancer l'opération",
                     style: Get.theme.textTheme.caption!.copyWith(
                       color: Colors.white,
                     ),

@@ -14,6 +14,7 @@ import 'package:mplex/Pages/Resolution/index.dart';
 import 'package:mplex/Pages/Sauvegarde/index.dart';
 import 'package:mplex/page.dart';
 import 'Model/Class/variable.dart';
+import 'Pages/aide.dart';
 import 'Pages/home.dart';
 
 void main() async {
@@ -89,8 +90,8 @@ class MPlex extends StatelessWidget {
                   //  transitionDuration: const Duration(milliseconds: 400),
                   //  transition: Transition.fade,
                   name: "/aide",
-                  page: () => Root(
-                        rightSide: Home(),
+                  page: () => const Root(
+                        rightSide: Aide(),
                       )),
             ],
           );

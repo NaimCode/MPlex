@@ -230,7 +230,7 @@ class ButtonAddContrainte extends StatelessWidget {
                             ),
                           ),
                         ));
-                    if (check) {
+                    if (check && check != null) {
                       Contrainte contrainte = Contrainte(
                           variables: controller
                               .map((e) => Variable(
