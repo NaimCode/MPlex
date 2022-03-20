@@ -5,7 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:mplex/Config/fonction.dart';
-
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:mplex/Model/Class/variable_condition.dart';
 import 'package:mplex/Model/enum.dart';
 part 'variable.g.dart';
@@ -129,6 +130,30 @@ class Variable {
             text: isLast ? "" : ",",
             style: Get.theme.textTheme.headline1!
                 .copyWith(fontSize: 17, color: Colors.grey[700]),
+          ),
+        ]));
+  }
+
+  pw.Widget pwgetNameWidget2({required bool isLast, final tff}) {
+    return pw.RichText(
+        text: pw.TextSpan(
+            text: name[0],
+            style: pw.TextStyle(
+              fontSize: 13,
+              font: tff,
+            ),
+            children: [
+          //!Waarning might throw exception
+          pw.TextSpan(
+            text: name[1],
+            style: pw.TextStyle(
+              fontSize: 10,
+              font: tff,
+            ),
+          ),
+          pw.TextSpan(
+            text: isLast ? "" : ",",
+            style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 13),
           ),
         ]));
   }

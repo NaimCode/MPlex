@@ -22,11 +22,15 @@ class _SauvegardePageState extends State<SauvegardePage> {
         padding: const EdgeInsets.only(top: 13.0, right: 13, left: 13.0),
         child: ValueListenableBuilder(
             valueListenable: Hive.box("sauvegarde").listenable(),
-            builder: (context, Box b, _) => ListView.builder(
-                controller: ScrollController(),
-                itemCount: b.length,
-                itemBuilder: (context, index) =>
-                    SauvegardeItem(p: b.getAt(b.length - 1 - index)))),
+            builder: (context, Box b, _) => b.isEmpty
+                ? Center(
+                    child: Text("Aucun problème sauvegardé",
+                        style: TextStyle(color: Colors.white60)))
+                : ListView.builder(
+                    controller: ScrollController(),
+                    itemCount: b.length,
+                    itemBuilder: (context, index) =>
+                        SauvegardeItem(p: b.getAt(b.length - 1 - index)))),
       ),
     );
   }

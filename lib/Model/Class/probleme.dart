@@ -6,7 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mplex/Config/const.dart';
-
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:mplex/Model/Class/tableau.dart';
 import 'package:mplex/Model/constante.dart';
 import 'package:mplex/Model/enum.dart';
@@ -342,6 +343,120 @@ class Probleme {
                   padding: const EdgeInsets.only(top: 3),
                   child: Text(0.toString(),
                       style: Get.textTheme.bodyText2!.copyWith(fontSize: 17)),
+                )
+              ],
+            )
+          ]),
+    );
+  }
+
+  pw.Widget pwtoFormCanoniqueWidget(Probleme? probleme, final tff) {
+    Probleme p = probleme ?? copyWith();
+    List<Contrainte> cons = [];
+    for (int i = 0; i < p.forme.contraintes.length; i++) {
+      cons.add(p.forme.contraintes[i].copyWith());
+    }
+    for (int i = 0; i < cons.length; i++) {
+      cons[i].variables.removeWhere((element) => element.value == 0);
+    }
+
+    return pw.Padding(
+      padding: const pw.EdgeInsets.symmetric(vertical: 0),
+      child: pw.Column(
+          mainAxisSize: pw.MainAxisSize.min,
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            ...cons
+                .map((e) => pw.Row(
+                      mainAxisSize: pw.MainAxisSize.min,
+                      crossAxisAlignment: pw.CrossAxisAlignment.center,
+                      children: [
+                        ...e.variables.map(
+                          (element) => element.value == 0
+                              ? pw.Container()
+                              : pw.Row(
+                                  mainAxisSize: pw.MainAxisSize.min,
+                                  children: [
+                                    element.value.isNegative
+                                        ? pw.Padding(
+                                            padding:
+                                                const pw.EdgeInsets.symmetric(
+                                                    horizontal: 5),
+                                            child: pw.Text("-",
+                                                style: pw.TextStyle(
+                                                    fontWeight:
+                                                        pw.FontWeight.bold,
+                                                    fontSize: 13)),
+                                          )
+                                        : p.variables.indexOf(element) == 0
+                                            ? pw.SizedBox()
+                                            : pw.Padding(
+                                                padding: const pw
+                                                        .EdgeInsets.symmetric(
+                                                    horizontal: 5),
+                                                child: pw.Text("+",
+                                                    style: pw.TextStyle(
+                                                        fontWeight:
+                                                            pw.FontWeight.bold,
+                                                        fontSize: 13)),
+                                              ),
+                                    pw.Padding(
+                                        padding: pw.EdgeInsets.only(bottom: 5),
+                                        child: pw.RichText(
+                                            text: pw.TextSpan(
+                                                text: element.value.abs() == 1
+                                                    ? ""
+                                                    : element.value
+                                                        .abs()
+                                                        .toInt()
+                                                        .toString(),
+                                                children: [
+                                              pw.TextSpan(
+                                                  text: element.name[0],
+                                                  style: pw.TextStyle(
+                                                    fontSize: 13,
+                                                    font: tff,
+                                                  )),
+                                              //!Waarning might throw exception
+                                              pw.TextSpan(
+                                                  text: element.name[1],
+                                                  style: pw.TextStyle(
+                                                    fontSize: 10,
+                                                    font: tff,
+                                                  )),
+                                            ]))),
+                                  ],
+                                ),
+                        ),
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.symmetric(horizontal: 5),
+                          child: e.pwgetInegalityIcon(),
+                        ),
+                        pw.Text(
+                          e.value.toInt().toString(),
+                        )
+                      ],
+                    ))
+                .toList(),
+            pw.SizedBox(height: 10),
+            pw.Row(
+              mainAxisSize: pw.MainAxisSize.min,
+              children: [
+                ...variables
+                    .map((e) => e.pwgetNameWidget2(
+                        isLast: variables.last == e, tff: tff))
+                    .toList(),
+                pw.Padding(
+                  padding: const pw.EdgeInsets.only(left: 5, right: 5, top: 7),
+                  child: pw.Text("≥",
+                      style: pw.TextStyle(
+                          fontWeight: pw.FontWeight.bold, fontSize: 13)),
+                ),
+                pw.Padding(
+                  padding: const pw.EdgeInsets.only(top: 3),
+                  child: pw.Text(
+                    0.toString(),
+                  ),
                 )
               ],
             )

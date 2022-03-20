@@ -5,7 +5,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:mplex/Model/Class/variable.dart';
 import 'package:mplex/Model/enum.dart';
-
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 part 'contrainte.g.dart';
 
 @HiveType(typeId: 4)
@@ -87,6 +88,29 @@ class Contrainte {
     }
   }
 
+  pw.Widget pwgetInegalityIcon() {
+    switch (inegalite) {
+      case Inegalite.INF_EGAL:
+        return pw.Text("≤",
+            style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 13));
+      case Inegalite.INF:
+        return pw.Text("<",
+            style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 13));
+      case Inegalite.SUP_EGAL:
+        return pw.Text("≥",
+            style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 13));
+      case Inegalite.SUP:
+        return pw.Text(">",
+            style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 13));
+      case Inegalite.EGAL:
+        return pw.Text("=",
+            style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 13));
+      default:
+        return pw.Text("≤",
+            style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 13));
+    }
+  }
+
   Widget getValueWidget() {
     return Container(
         margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -113,5 +137,6 @@ class Contrainte {
   }
 
   @override
-  String toString() => 'Contrainte(variables: $variables, inegalite: $inegalite, value: $value)';
+  String toString() =>
+      'Contrainte(variables: $variables, inegalite: $inegalite, value: $value)';
 }
