@@ -1,17 +1,10 @@
-# mplex
+# Linear Equations Solver using Simplex Method
+![](https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png | width=100)
 
-A new Flutter project.
+A Flutter application for solving linear equations using the simplex method. This software provides an intuitive graphical interface for inputting linear equations and obtaining their solutions through the simplex algorithm.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# MPlex
+## Features
+.User-friendly interface for inputting linear equations and constraints.
+.Efficient simplex algorithm implementation for accurate solutions.
+.Real-time visualization of the simplex tableau and steps.
+.Support for both Windows and MacOS platforms.
